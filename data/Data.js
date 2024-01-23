@@ -1,7 +1,8 @@
-import { Dimensions, Image, View } from "react-native";
+import { Dimensions, Image, Text, View } from "react-native";
 import IMAGES from "../assets/banner";
 export const width = Dimensions.get("window").width;
 
+export const NAMA_KITAB = "syamail_muhammadiyah";
 export const data = [
   {
     id: 1,
@@ -31,73 +32,92 @@ export const data = [
 
 export const itemData = [
   {
-    id: 1, 
+    id: 1,
     icon: (
       <Image
         style={{ width: 100, height: 100 }}
         source={require("../assets/png/icon512.jpg")}
       />
     ),
+    title: (
+       
+        <Text style={{textAlign: "center"}} 
+        >
+          Daftar Isi
+        </Text>
+      
+    ),
   },
   {
-    id: 2, 
+    id: 2,
     icon: (
       <Image
         style={{ width: 100, height: 100 }}
         source={require("../assets/png/menu_favorite.png")}
       />
     ),
+    title: <Text style={{textAlign: "center"}}>Ditandai</Text>,
   },
   {
-    id: 3, 
+    id: 3,
     icon: (
       <Image
         style={{ width: 100, height: 100 }}
         source={require("../assets/png/menu_recent.png")}
       />
     ),
+    title: <Text style={{textAlign: "center"}} 
+        >Bacaan Terakhir</Text>,
   },
 
   {
-    id: 4, 
+    id: 4,
     icon: (
       <Image
         style={{ width: 100, height: 100 }}
         source={require("../assets/png/menu_setting.png")}
       />
     ),
+    title: <Text style={{textAlign: "center"}} 
+        >Setting</Text>,
   },
 
   {
-    id: 5, 
+    id: 5,
     icon: (
       <Image
         style={{ width: 100, height: 100 }}
         source={require("../assets/png/menu_review.png")}
       />
     ),
+    title: <Text style={{textAlign: "center"}} 
+        >Beri Nilai</Text>,
   },
 
   {
-    id: 6, 
+    id: 6,
     icon: (
       <Image
         style={{ width: 100, height: 100 }}
         source={require("../assets/png/menu_other_apps.png")}
       />
     ),
+    title: <Text style={{textAlign: "center"}} 
+        >Aplikasi Lain</Text>,
   },
   {
-    id: 7, 
+    id: 7,
     icon: (
       <Image
         style={{ width: 100, height: 100 }}
         source={require("../assets/png/menu_info.png")}
       />
     ),
+    title: <Text style={{textAlign: "center"}} 
+        >Tentang Aps</Text>,
   },
   {
-    id: 8, 
+    id: 8,
     icon: (
       <View style={{ width: 100, height: 100, justifyContent: "center" }}>
         <Image
@@ -106,15 +126,19 @@ export const itemData = [
         />
       </View>
     ),
+    title: <Text style={{textAlign: "center"}} 
+        >Informasi</Text>,
   },
   {
-    id: 9, 
+    id: 9,
     icon: (
       <Image
         style={{ width: 100, height: 100 }}
         source={require("../assets/png/logo_pesantren.png")}
       />
     ),
+    title: <Text style={{textAlign: "center"}} 
+        >Profil</Text>,
   },
 ];
 

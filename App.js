@@ -1,7 +1,8 @@
 
-import { LogBox } from "react-native";
-import Home from "./screens/Home";
+import { LogBox } from "react-native"; 
 import Index from "./Index";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 
 export default function App() {
@@ -13,7 +14,9 @@ export default function App() {
   ]);
 
   return (
-    <Index/>
+    <Provider store={store}>
+      <Index/>
+    </Provider>
   );
 }
 

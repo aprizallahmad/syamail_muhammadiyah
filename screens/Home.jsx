@@ -14,54 +14,22 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Carousel, { Pagination } from "react-native-snap-carousel";
-import { SECTIONS, data, itemData, width } from "../data/Data";
+import { data, itemData, width } from "../data/Data";
 import { styles } from "../assets/css/Style";
 import { useNavigation } from "@react-navigation/native";
+import { functionLog } from "../helpers/functionHelper";
+import { useFetchStore } from "../customeHooks/useFetchStore";
 
-
-console.log(`ini width handphonya ${width}`);
-
-export default Home =() =>{
-    const navigation = useNavigation('')
+const TAG = "dari HOME";
+functionLog("ini width handphonya", width);
+export default Home = () => {
+  const navigation = useNavigation("");
   const [activeDot, setActiveDot] = useState(0);
   const _carousel = useRef();
+  const [{ stores }] = useFetchStore();
+  functionLog("dari home", `  stores , ${stores} `);
 
-  const handleCarouselClick = (item, index) => {
-    console.log("Clicked item:", item, "at index:", index);
-    // ... your click actions here
-    const url = item.url;
-    Linking.openURL(url);
-  };
-
-  const handleMenuItemClick = (item, index ) => {
-    console.log('item handleMenuItemClick item id' +item.id)
-
-    switch (item.id) {
-        case 1:
-            navigation.replace('Kitab');
-        case 2:
-            navigation.replace('Kitab');
-          break;
-        default:
-          // Tindakan yang ingin Anda lakukan jika item.id tidak cocok dengan kasus di atas
-          break;
-      }
-  }
   
-  const ListItem = ({ item, index }) => {
-    return (
-      <View style={styles.item}>
-        <Image
-          source={{
-            uri: item.uri,
-          }}
-          style={styles.itemPhoto}
-          resizeMode="cover"
-        />
-        <Text style={styles.itemText}>{item.text}</Text>
-      </View>
-    );
-  };
 
   const _renderItem = ({ item, index }) => {
     return (
@@ -80,44 +48,86 @@ export default Home =() =>{
   const ItemGridMenu = ({ item, index }) => {
     return (
       <View style={styles.item}>
-        <TouchableOpacity onPress={()=> handleMenuItemClick(item, index)}>
+        <TouchableOpacity onPress={() => handleMenuItemClick(item, index)}>
           {item.icon}
+          {item.title}
         </TouchableOpacity>
       </View>
     );
   };
 
-  const RenderSectionHeader = ({ section }) => (
-    <>
-      <Text style={styles.sectionHeader}>{section.title}</Text>
-      {section.horizontal ? (
-        <FlatList
-          horizontal
-          data={section.data}
-          renderItem={ItemToko}
-          showsHorizontalScrollIndicator={false}
-        />
-      ) : null}
-    </>
-  );
+  const handleMenuItemClick = (item, index) => {
+    functionLog(TAG, `Clicked item:", ${item.id}, "at index:", ${index}`);
 
-  const ItemToko = ({ item }) => <ListItem item={item} />;
-  const ItemListToko = ({ item, section }) => {
-    if (section.horizontal) {
-      return null;
+    switch (item.id) {
+      case 1:
+        navigation.replace("Kitab");
+        break;
+      case 2:
+        navigation.replace("Kitab");
+        break;
+      case 3:
+        navigation.replace("Kitab");
+        break;
+      case 4:
+        break;
+      case 5:
+        Linking.openURL(
+          "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
+        );
+        break;
+      default:
+        // Tindakan yang ingin Anda lakukan jika item.id tidak cocok dengan kasus di atas
+        break;
     }
-    return <ListItem item={item} />;
   };
 
+  const handleCarouselClick = (item, index) => {
+    functionLog(
+      "dari home",
+      `Clicked handleCarouselClick:", ${item}, "at index:", ${index}`
+    );
+    // ... your click actions here
+    const url = item.url;
+    Linking.openURL(url);
+  };
+
+  const handleStoreClick = (item, index) => {
+    functionLog(
+      "dari home",
+      `Clicked handleStoreClick:", ${item}, "at index:", ${index}`
+    );
+    // ... your click actions here
+    const url = item.link_toko;
+    Linking.openURL(url);
+  };
+  const renderStoreItem = ({ item }) => (
+    <View
+      className="m-1 rounded overflow-hidden  items-center "
+      style={{ height: width * 0.4, width: width * 0.35 }}
+    >
+      <TouchableOpacity onPress={() => handleStoreClick(item)}>
+        <Image
+          source={{ uri: item.logo_toko }}
+          style={{ height: width * 0.3, width: width * 0.3 }}
+          resizeMode="contain"
+        />
+        <Text className="  font-medium text-gray-700  text-center">
+          {item.nama_toko}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-slate-100">
       {/* <StatusBar style="auto" backgroundColor={"#FF0000"} /> */}
       {/* <View className="bg-[#FF0000] h-8 justify-center">
         <Text> Syamail Muhammadiyah</Text>
       </View> */}
       <ScrollView>
         <Carousel
-        //   autoplay={true}
+          //   autoplay={true}
           loop={true}
           data={data}
           ref={_carousel}
@@ -156,21 +166,18 @@ export default Home =() =>{
         <View className="bg-[#1eb019] h-8 justify-center">
           <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
         </View>
-        <SectionList
-          contentContainerStyle={{ paddingHorizontal: 10 }}
-          stickySectionHeadersEnabled={false}
-          sections={SECTIONS}
-          renderSectionHeader={RenderSectionHeader}
-          renderItem={ItemListToko}
-        />
-
+        <View className="flex flex-row flex-wrap">
+          <FlatList
+            data={stores.toko_mitra}
+            horizontal={true}
+            renderItem={renderStoreItem}
+            keyExtractor={(item) => item.id_toko}
+          />
+        </View>
         <View className="bg-[#1eb019] h-8 justify-center mb-20">
           <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
-
-
-  
+  );
+};

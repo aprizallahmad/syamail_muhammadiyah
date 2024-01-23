@@ -10,3 +10,7 @@ export const functionBack = (navigation, navigateTo)=>{
         )
         return () => backHandler.remove();
 }
+
+export const functionLog = (message , data) => { 
+    return console.log(  data +  ">>>>>>>>>>>>>> functionLog " +message+ " <<<<<<<<<<<<<<"  )
+}
