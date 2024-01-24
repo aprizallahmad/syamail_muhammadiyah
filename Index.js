@@ -25,11 +25,8 @@ export default Index = () => {
           <Stack.Screen
             options={{
               headerShown: true,
-              //  headerLeft: Kitab,
-              headerBackVisible: true,
-              headerBackImageSource: "",
-              title: "Syamail Muhammadiyah",
-              headerSearchBarOptions: true,
+              //  headerLeft: Kitab, 
+              title: "Syamail Muhammadiyah", 
               animation: "slide_from_left",
             }}
             name="Kitab"

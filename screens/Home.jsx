@@ -19,6 +19,7 @@ import { styles } from "../assets/css/Style";
 import { useNavigation } from "@react-navigation/native";
 import { functionLog } from "../helpers/functionHelper";
 import { useFetchStore } from "../customeHooks/useFetchStore";
+import { SpecifiedView } from "../components/SpecifiedView";
 
 const TAG = "dari HOME";
 functionLog("ini width handphonya", width);
@@ -61,24 +62,20 @@ export default Home = () => {
 
     switch (item.id) {
       case 1:
-        navigation.replace("Kitab");
-        break;
-      case 2:
-        navigation.replace("Kitab");
-        break;
-      case 3:
-        navigation.replace("Kitab");
-        break;
-      case 4:
-        break;
-      case 5:
-        Linking.openURL(
-          "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
-        );
-        break;
-      default:
-        // Tindakan yang ingin Anda lakukan jika item.id tidak cocok dengan kasus di atas
-        break;
+    case 2:
+    case 3:
+      navigation.replace("Kitab");
+      break;
+    case 4:
+      break;
+    case 5:
+      Linking.openURL(
+        "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
+      );
+      break;
+    default:
+      // Handle case where item.id is not matched with any cases above
+      break;
     }
   };
 
@@ -120,7 +117,7 @@ export default Home = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-100">
+    <SpecifiedView className="flex-1 bg-slate-100">
       {/* <StatusBar style="auto" backgroundColor={"#FF0000"} /> */}
       {/* <View className="bg-[#FF0000] h-8 justify-center">
         <Text> Syamail Muhammadiyah</Text>
@@ -178,6 +175,6 @@ export default Home = () => {
           <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SpecifiedView>
   );
 };

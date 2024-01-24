@@ -1,9 +1,9 @@
-import { useFocusEffect } from "@react-navigation/native";
+ 
 import React, { useEffect } from "react";
-import { BackHandler, FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {   FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { functionBack, functionLog } from "../helpers/functionHelper";
-import { useFetchBook } from "../customeHooks/useFetchBook";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useFetchBook } from "../customeHooks/useFetchBook"; 
+import { SpecifiedView } from "../components/SpecifiedView";
 
 export default Kitab = ({ navigation }) => {
   const [{ books }] = useFetchBook();
@@ -22,14 +22,12 @@ export default Kitab = ({ navigation }) => {
     </View>
   )
   return (
-  <SafeAreaView className="flex-1">
-
-    <ScrollView className="bg-slate-300">  
+  <SpecifiedView className="flex-1">
+ 
             <FlatList 
             data={books.syamail_muhammadiyah}
             renderItem={renderBookItem}
-            /> 
-    </ScrollView>
-  </SafeAreaView>
+            />  
+  </SpecifiedView>
   );
 };
