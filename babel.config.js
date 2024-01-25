@@ -5,7 +5,7 @@ module.exports = function(api) {
     plugins: [
       "nativewind/babel",
       "@babel/plugin-transform-optional-catch-binding",
-      "react-native-reanimated/plugin" , 
+      "react-native-reanimated/plugin", 
   ],
   };
 };
