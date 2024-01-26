@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { useRef, useState } from "react";
 import {
   Dimensions,
@@ -14,23 +13,20 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Carousel, { Pagination } from "react-native-snap-carousel";
-import { data, itemData, width } from "../data/Data";
+import { dataCarousel, itemData, width } from "../data/Data";
 import { styles } from "../assets/css/Style";
-import { useNavigation } from "@react-navigation/native";
 import { functionLog } from "../helpers/functionHelper";
 import { useFetchStore } from "../customeHooks/useFetchStore";
 import { SpecifiedView } from "../components/SpecifiedView";
 
 const TAG = "dari HOME";
 functionLog("ini width handphonya", width);
-export default Home = () => {
-  const navigation = useNavigation("");
+
+export default Home = ({ navigation }) => {
   const [activeDot, setActiveDot] = useState(0);
   const _carousel = useRef();
   const [{ stores }] = useFetchStore();
   functionLog("dari home", `  stores , ${stores} `);
-
-  
 
   const _renderItem = ({ item, index }) => {
     return (
@@ -49,33 +45,38 @@ export default Home = () => {
   const ItemGridMenu = ({ item, index }) => {
     return (
       <View style={styles.item}>
-        <TouchableOpacity onPress={() => handleMenuItemClick(item, index)}>
+        <TouchableOpacity
+          onPress={() => handleMenuItemClick(item, index)}
+        >
           {item.icon}
-          {item.title}
+          {item.title_menu}
         </TouchableOpacity>
       </View>
     );
   };
 
   const handleMenuItemClick = (item, index) => {
-    functionLog(TAG, `Clicked item:", ${item.id}, "at index:", ${index}`);
+    functionLog(
+      TAG,
+      `Clicked item:", ${item.id}, "at index:", ${index}`
+    );
 
     switch (item.id) {
       case 1:
-    case 2:
-    case 3:
-      navigation.replace("Kitab");
-      break;
-    case 4:
-      break;
-    case 5:
-      Linking.openURL(
-        "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
-      );
-      break;
-    default:
-      // Handle case where item.id is not matched with any cases above
-      break;
+      case 2:
+      case 3:
+        navigation.navigate("Kitab");
+        break;
+      case 4:
+        break;
+      case 5:
+        Linking.openURL(
+          "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
+        );
+        break;
+      default:
+        // Handle case where item.id is not matched with any cases above
+        break;
     }
   };
 
@@ -98,6 +99,7 @@ export default Home = () => {
     const url = item.link_toko;
     Linking.openURL(url);
   };
+
   const renderStoreItem = ({ item }) => (
     <View
       className="m-1 rounded overflow-hidden  items-center "
@@ -126,7 +128,7 @@ export default Home = () => {
         <Carousel
           //   autoplay={true}
           loop={true}
-          data={data}
+          data={dataCarousel}
           ref={_carousel}
           renderItem={_renderItem}
           sliderWidth={width}
@@ -137,7 +139,7 @@ export default Home = () => {
         <View className=" justify-center">
           <Pagination
             activeDotIndex={activeDot}
-            dotsLength={data.length}
+            dotsLength={dataCarousel.length}
             dotStyle={{
               width: 10,
             }}
@@ -156,7 +158,7 @@ export default Home = () => {
             numColumns={3}
             style={{ padding: 5 }}
             renderItem={ItemGridMenu}
-            keyExtractor={(item) => item.alt}
+            keyExtractor={(itemData) => itemData.alt}
             scrollEnabled={false}
           />
         </View>
@@ -168,7 +170,7 @@ export default Home = () => {
             data={stores.toko_mitra}
             horizontal={true}
             renderItem={renderStoreItem}
-            keyExtractor={(item) => item.id_toko}
+            keyExtractor={(toko_mitra) => toko_mitra.id_toko}
           />
         </View>
         <View className="bg-[#1eb019] h-8 justify-center mb-20">

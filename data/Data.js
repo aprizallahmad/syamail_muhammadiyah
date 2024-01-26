@@ -3,33 +3,32 @@ import IMAGES from "../assets/banner";
 export const width = Dimensions.get("window").width;
 
 export const NAMA_KITAB = "syamail_muhammadiyah";
-export const data = [
+export const dataCarousel = [
   {
     id: 1,
-    title: "Kitab Kuning",
+    title_kitab: "Kitab Kuning",
     image: IMAGES.KITAB_KUNING,
     url: "https://kitabkuning.id",
   },
   {
     id: 2,
-    title: "Error Update",
+    title_kitab: "Error Update",
     image: IMAGES.ERROR_UPDATE,
     url: "https://ichwanul.com/2021/android/aplikasi/mengatasi-aplikasi-force-close/",
   },
   {
     id: 3,
-    title: "Majelis Info",
+    title_kitab: "Majelis Info",
     image: IMAGES.MAJELIS_INFO,
     url: "https://majelis.info",
   },
   {
     id: 3,
-    title: "Youtube Markaz",
+    title_kitab: "Youtube Markaz",
     image: IMAGES.MARKAZ,
     url: "https://www.youtube.com/@UstadzAhmadAlfarisi",
   },
 ];
-
 export const itemData = [
   {
     id: 1,
@@ -39,7 +38,7 @@ export const itemData = [
         source={require("../assets/png/icon512.jpg")}
       />
     ),
-    title: (
+    title_menu: (
        
         <Text style={{textAlign: "center"}} 
         >
@@ -56,7 +55,7 @@ export const itemData = [
         source={require("../assets/png/menu_favorite.png")}
       />
     ),
-    title: <Text style={{textAlign: "center"}}>Ditandai</Text>,
+    title_menu: <Text style={{textAlign: "center"}}>Ditandai</Text>,
   },
   {
     id: 3,
@@ -66,7 +65,7 @@ export const itemData = [
         source={require("../assets/png/menu_recent.png")}
       />
     ),
-    title: <Text style={{textAlign: "center"}} 
+    title_menu: <Text style={{textAlign: "center"}} 
         >Bacaan Terakhir</Text>,
   },
 
@@ -78,7 +77,7 @@ export const itemData = [
         source={require("../assets/png/menu_setting.png")}
       />
     ),
-    title: <Text style={{textAlign: "center"}} 
+    title_menu: <Text style={{textAlign: "center"}} 
         >Setting</Text>,
   },
 
@@ -90,7 +89,7 @@ export const itemData = [
         source={require("../assets/png/menu_review.png")}
       />
     ),
-    title: <Text style={{textAlign: "center"}} 
+    title_menu: <Text style={{textAlign: "center"}} 
         >Beri Nilai</Text>,
   },
 
@@ -102,7 +101,7 @@ export const itemData = [
         source={require("../assets/png/menu_other_apps.png")}
       />
     ),
-    title: <Text style={{textAlign: "center"}} 
+    title_menu: <Text style={{textAlign: "center"}} 
         >Aplikasi Lain</Text>,
   },
   {
@@ -113,7 +112,7 @@ export const itemData = [
         source={require("../assets/png/menu_info.png")}
       />
     ),
-    title: <Text style={{textAlign: "center"}} 
+    title_menu: <Text style={{textAlign: "center"}} 
         >Tentang Aps</Text>,
   },
   {
@@ -126,7 +125,7 @@ export const itemData = [
         />
       </View>
     ),
-    title: <Text style={{textAlign: "center"}} 
+    title_menu: <Text style={{textAlign: "center"}} 
         >Informasi</Text>,
   },
   {
@@ -137,14 +136,13 @@ export const itemData = [
         source={require("../assets/png/logo_pesantren.png")}
       />
     ),
-    title: <Text style={{textAlign: "center"}} 
+    title_menu: <Text style={{textAlign: "center"}} 
         >Profil</Text>,
   },
 ];
-
 export const SECTIONS = [
   {
-    title: "Made for you",
+    title_section: "Made for you",
     horizontal: true,
     data: [
       {
