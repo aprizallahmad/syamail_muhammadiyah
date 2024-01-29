@@ -6,7 +6,6 @@ import {
   ImageBackground,
   Linking,
   ScrollView,
-  SectionList,
   Text,
   TouchableOpacity,
   View,
@@ -15,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { dataCarousel, itemData, width } from "../data/Data";
 import { styles } from "../assets/css/Style";
-import { functionLog } from "../helpers/functionHelper";
+import { functionBack, functionLog } from "../helpers/functionHelper";
 import { useFetchStore } from "../customeHooks/useFetchStore";
 import { SpecifiedView } from "../components/SpecifiedView";
 
@@ -119,14 +118,11 @@ export default Home = ({ navigation }) => {
   );
 
   return (
-    <SpecifiedView className="flex-1 bg-slate-100">
-      {/* <StatusBar style="auto" backgroundColor={"#FF0000"} /> */}
-      {/* <View className="bg-[#FF0000] h-8 justify-center">
-        <Text> Syamail Muhammadiyah</Text>
-      </View> */}
-      <ScrollView>
+    <SpecifiedView className="flex-1 ">
+      <View className= " "><Text>Banner Iklan (ads) Pengumuman (announcement)</Text></View>
+      <ScrollView className="">
         <Carousel
-          //   autoplay={true}
+            // autoplay={true}
           loop={true}
           data={dataCarousel}
           ref={_carousel}

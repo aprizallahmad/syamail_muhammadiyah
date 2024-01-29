@@ -4,16 +4,21 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Kitab from "./screens/Kitab";
 import Home from "./screens/Home";
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
+import { Button, Text, View } from "react-native";
+import { DetailKitab } from "./screens/DetailKitab";
+import Color from "./assets/color/Color";
+import { handleSearch } from "./helpers/functionHelper";
+import { useState } from "react";
 const Stack = createNativeStackNavigator();
+
 
 export default Index = () => {
   return (
     <NavigationContainer>
-      <StatusBar style="auto" backgroundColor={"#FF0000"} />
+      {/* <StatusBar style="auto" backgroundColor={Color.status_bar} /> */}
       <Stack.Navigator>
         <Stack.Screen
-          options={{
+          options={{ 
             title: "Home",
             animation: "slide_from_left",
           }}
@@ -25,9 +30,22 @@ export default Index = () => {
             headerShown: true,
             //  headerLeft: Kitab,
             animation: "slide_from_left",
+            headerStyle : {
+              backgroundColor  :"#fff", 
+            }
           }}
+          
           name="Kitab"
           component={Kitab}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            //  headerLeft: Kitab,
+            animation: "slide_from_left",
+          }}
+          name="Detail"
+          component={DetailKitab}
         />
       </Stack.Navigator>
     </NavigationContainer>
