@@ -5,6 +5,6 @@ export const SpecifiedView = ({children , style})=> {
     return Platform.OS === 'ios' ? (
         <IosSafeAre style={style}>{children}</IosSafeAre>
     ) : (
-        <AndroidSafeArea style={style}>{children}</AndroidSafeArea>
+        <AndroidSafeArea className="mt-[-35]" style={style}>{children}</AndroidSafeArea>
     )
 }
