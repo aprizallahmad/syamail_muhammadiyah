@@ -5,13 +5,11 @@ import { functionLog } from "../helpers/functionHelper";
 
 
 export const useFetchBook = () => {
-    let books = useSelector((state)=> state )
+    let books = useSelector((state)=> state.books )
     const dispatcher = useDispatch()  
     useEffect(()=> {
         dispatcher(fetchBookAction())
     },[])
-
-    books = books.books 
-    functionLog('dari custom hooks useFetchBook' ,books )
     return [books]
+    
 }   

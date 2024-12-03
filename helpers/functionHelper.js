@@ -22,5 +22,5 @@ export const functionBack = (navigation, navigateTo)=>{
 }
 
 export const functionLog = (message , data) => { 
-    return console.log(  data +  ">>>>>>>>>>>>>> functionLog " +message+ " <<<<<<<<<<<<<<"  )
+    return console.log(  data +  " >>>>>>>>>>>>>> functionLog " +message+ " <<<<<<<<<<<<<<"  )
 }

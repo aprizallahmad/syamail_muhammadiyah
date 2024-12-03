@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -17,16 +17,21 @@ import { styles } from "../assets/css/Style";
 import { functionBack, functionLog } from "../helpers/functionHelper";
 import { useFetchStore } from "../customeHooks/useFetchStore";
 import { SpecifiedView } from "../components/SpecifiedView";
-
+import { Loader } from "../components/Loader";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const TAG = "dari HOME";
 functionLog("ini width handphonya", width);
 
 export default Home = ({ navigation }) => {
   const [activeDot, setActiveDot] = useState(0);
+  const [dataReady, setDataReady] = useState(false);
   const _carousel = useRef();
-  const [{ stores }] = useFetchStore();
-  functionLog("dari home", `  stores , ${stores} `);
+  const [{ stores, isLoadingStore, error }] = useFetchStore();
+  functionLog("dari home", `  isLoadingStore, ${isLoadingStore} `);
+  functionLog("dari home", `  error , ${error} `);
+  const loding = true;
 
+ 
   const _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity onPress={() => handleCarouselClick(item, index)}>
@@ -41,12 +46,12 @@ export default Home = ({ navigation }) => {
     );
   };
 
+
+
   const ItemGridMenu = ({ item, index }) => {
     return (
       <View style={styles.item}>
-        <TouchableOpacity
-          onPress={() => handleMenuItemClick(item, index)}
-        >
+        <TouchableOpacity onPress={() => handleMenuItemClick(item, index)}>
           {item.icon}
           {item.title_menu}
         </TouchableOpacity>
@@ -54,29 +59,34 @@ export default Home = ({ navigation }) => {
     );
   };
 
-  const handleMenuItemClick = (item, index) => {
-    functionLog(
-      TAG,
-      `Clicked item:", ${item.id}, "at index:", ${index}`
-    );
+  const handleMenuItemClick = async (item, index) => {
+    functionLog(TAG, `Clicked item:", ${item.id}, "at index:", ${index}`);  
 
-    switch (item.id) {
-      case 1:
-      case 2:
-      case 3:
-        navigation.navigate("Kitab");
-        break;
-      case 4:
-        break;
-      case 5:
-        Linking.openURL(
-          "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
-        );
-        break;
-      default:
-        // Handle case where item.id is not matched with any cases above
-        break;
-    }
+      switch (item.id) {
+        case 1:
+          navigation.navigate("Kitab", );
+          break; 
+        case 2:
+          navigation.navigate("Favorite");
+          break;
+        case 3:
+          if(dataLast == null){
+            return alert("Anda Belum Membaca Apapun..")
+           }
+          navigation.navigate("LastDetail", dataLast)
+        case 4:
+          break;
+        case 5:
+          Linking.openURL(
+            "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
+          );
+          break;
+        default:
+          // Handle case where item.id is not matched with any cases above
+          break;
+      }
+    
+    
   };
 
   const handleCarouselClick = (item, index) => {
@@ -116,13 +126,11 @@ export default Home = ({ navigation }) => {
       </TouchableOpacity>
     </View>
   );
-
   return (
-    <SpecifiedView className="flex-1 ">
-      <View className= " "><Text>Banner Iklan (ads) Pengumuman (announcement)</Text></View>
+    <SpecifiedView className="">
       <ScrollView className="">
         <Carousel
-            // autoplay={true}
+          // autoplay={true}
           loop={true}
           data={dataCarousel}
           ref={_carousel}
@@ -176,3 +184,4 @@ export default Home = ({ navigation }) => {
     </SpecifiedView>
   );
 };
+

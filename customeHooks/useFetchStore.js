@@ -4,16 +4,13 @@ import { functionLog } from "../helpers/functionHelper";
 import { fetchStoreAction } from "../store/actions/actionCreator";
  
 export const useFetchStore = () => {
-    let stores = useSelector((state)=> state)
+    let stores = useSelector((state)=> state.stores)
     const dispatcher = useDispatch()  
     useEffect(()=> {
         dispatcher(fetchStoreAction())
     },[])
     
-    functionLog('dari custom hooks useFetchStore' ,stores )
-    stores = stores.stores
-    functionLog('dari custom hooks useFetchStore stores.stores' ,stores )
-
+    
     return [stores]
 }
  

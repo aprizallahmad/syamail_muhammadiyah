@@ -16,8 +16,8 @@ const ORDER_SLIDE_DESC = "&order=id_img,desc";
 const FILTER_CHANNELYOUTUBE = "&filter=nama_db,sw,";
 const STATUS = "&filter=status,sw,1"; 
 
-const urlFetchStore = `${ORIGIN}${TABEL_TOKO}${JSON_FORMAT}${STATUS}${ORDER_TOKO_DESC}`
-const urlFetchBook = `${ORIGIN}${TABEL_KITAB}${JSON_FORMAT}${ORDER_KITAB_ASC}`
+export const urlFetchStore = `${ORIGIN}${TABEL_TOKO}${JSON_FORMAT}${STATUS}${ORDER_TOKO_DESC}`
+export const urlFetchBook = `${ORIGIN}${TABEL_KITAB}${JSON_FORMAT}${ORDER_KITAB_ASC}`
 functionLog('urlFetchStore', urlFetchStore) 
 
 export const actionGenerator = (type , payload ) => {
@@ -57,7 +57,8 @@ export const fetchBookAction = ()=> {
 
             const responseJSON = await response.json()
              
-            functionLog('fetchBookAction responseJSON', responseJSON)
+            // functionLog('fetchBookAction responseJSON', responseJSON)
+
             dispatch(actionGenerator(BOOK_SET, responseJSON))
         } catch (err) {
             functionLog('error dari fetchBookAction', err)
