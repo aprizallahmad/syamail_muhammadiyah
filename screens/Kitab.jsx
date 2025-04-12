@@ -6,10 +6,11 @@ import {
   Button,
   FlatList,
   ScrollView,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import Text from "../components/Text";
+
 import { functionBack, functionLog } from "../helpers/functionHelper";
 import { useFetchBook } from "../customeHooks/useFetchBook";
 import { SpecifiedView } from "../components/SpecifiedView";
@@ -24,6 +25,7 @@ import Modal, {
 import { BOOK_SET } from "../store/actions/actionType";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import errorHandler from "../helpers/errHandler";
+import ScreenView from "../components/ScreenView";
 let dataBooksStorage = "";
 
 export default Kitab = ({ navigation }) => {
@@ -31,31 +33,36 @@ export default Kitab = ({ navigation }) => {
   const [booksStorage, setBooksStorage] = useState();
   const [visible, setVisible] = useState();
   const [messageModal, setMessageModal] = useState("OK");
-  const [textContent, setTextContent] = useState("Data Kitab kami simpan di cloud, untuk penggunaan pertama silakan download dahulu")
+  const [textContent, setTextContent] = useState(
+    "Data Kitab kami simpan di cloud, untuk penggunaan pertama silakan download dahulu"
+  );
   const dataReady = navigation.dispatch((state) => {
     functionLog("======================", state.dataReady);
     return state.params ? true : false;
-  });
+  }); 
   functionLog("ini data book storage", booksStorage?.length);
   functionLog("dataReady = navigation", dataReady);
 
-  useEffect(async () => {
-    try {
-      functionLog("++++++++++++++++++++ 2 ", "");
-      dataBooksStorage = await AsyncStorage.getItem("books");
-
-      functionLog("++++++++++++++++++++ 3 ", dataBooksStorage);
-      if (dataBooksStorage == null) {
-        functionLog("++++++++++++++++++++ 4 ", dataBooksStorage);
-        setVisible(true);
-      } else {
-        functionLog("++++++++++++++++++++ 5 ", dataBooksStorage); 
-        dataBooksStorage = JSON.parse(dataBooksStorage);
-        setBooksStorage(dataBooksStorage);
-        setVisible(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dataBooksStorage = await AsyncStorage.getItem("books");
+  
+        if (dataBooksStorage == null) {
+          setVisible(true);
+        } else {
+          const parsedData = JSON.parse(dataBooksStorage);
+          setBooksStorage(parsedData);
+          setVisible(false);
+        }
+      } catch (error) {
+        functionLog("error", error);
       }
-    } catch (error) {}
+    };
+  
+    fetchData();
   }, []);
+  
 
   const fetchBookAction = async () => {
     try {
@@ -75,11 +82,13 @@ export default Kitab = ({ navigation }) => {
       dataBooksStorage = JSON.parse(dataBooksStorage);
       // functionLog("databook storage", dataBooksStorage)
       setMessageModal("Done");
-      setTextContent("Data Berhasil Di unduh..")
+      setTextContent("Data Berhasil Di unduh..");
     } catch (err) {
       setMessageModal("Error..!");
-      setTextContent("Data Kitab kami simpan di cloud, untuk penggunaan pertama silakan download dahulu, Silahkan Cek Jaringan Anda")
-      
+      setTextContent(
+        "Data Kitab kami simpan di cloud, untuk penggunaan pertama silakan download dahulu, Silahkan Cek Jaringan Anda"
+      );
+
       errorHandler(err);
       functionLog("error dari fetchBookAction", err);
     }
@@ -105,7 +114,7 @@ export default Kitab = ({ navigation }) => {
 
   const renderBookItem = ({ item }) => {
     return (
-      <View className="m-1 rounded overflow-hidden bg-white ">
+      <View className="m-1 rounded overflow-hidden">
         <TouchableOpacity
           className="m-4 bg"
           onPress={() => {
@@ -137,43 +146,40 @@ export default Kitab = ({ navigation }) => {
   };
 
   return (
-    <SpecifiedView className="flex-1">
-      {visible ? (
-        <View>
-          <Modal
-            visible={visible}
-            onTouchOutside={() => navigation.navigate("Home")}
-            footer={moodalFooter()}
-          >
-            <ModalContent>
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "white",
-                  borderBottomWidth: 1,
-                  paddingBottom: 6,
-                  borderBottomColor: "#D1D1D1",
-                }}
-              >
-                <Text> Alert </Text>
-              </View>
-              <View className="mt-2 justify-center items-center">
-                <Text className="text-center">
-                  {textContent}
-                </Text>
-              </View>
-            </ModalContent>
-          </Modal>
-        </View>
-      ) : (
-        <View> 
-          <FlatList
-            data={booksStorage}
-            renderItem={renderBookItem}
-          />
-        </View>
-      )}
-    </SpecifiedView>
+    <ScreenView>
+      <SpecifiedView className="flex-1">
+        {visible ? (
+          <View>
+            <Modal
+              visible={visible}
+              onTouchOutside={() => navigation.navigate("Home")}
+              footer={moodalFooter()}
+            >
+              <ModalContent>
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "white",
+                    borderBottomWidth: 1,
+                    paddingBottom: 6,
+                    borderBottomColor: "#D1D1D1",
+                  }}
+                >
+                  <Text> Alert </Text>
+                </View>
+                <View className="mt-2 justify-center items-center">
+                  <Text className="text-center">{textContent}</Text>
+                </View>
+              </ModalContent>
+            </Modal>
+          </View>
+        ) : (
+          <View>
+            <FlatList data={booksStorage} renderItem={renderBookItem} />
+          </View>
+        )}
+      </SpecifiedView>
+    </ScreenView>
   );
 };

@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -21,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.aprizallahmad.syamailMuhammadiyah"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,6 +31,13 @@
     "extra": {
       "eas": {
         "projectId": "e754a49a-e04f-4e21-9d74-a0cb1bf8bfa2"
+      }
+    },
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "react-redux"
+        ]
       }
     }
   }

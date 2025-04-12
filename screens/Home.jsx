@@ -6,19 +6,26 @@ import {
   ImageBackground,
   Linking,
   ScrollView,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import Text from "../components/Text";
+
 import { SafeAreaView } from "react-native-safe-area-context";
-import Carousel, { Pagination } from "react-native-snap-carousel";
-import { dataCarousel, itemData, width } from "../data/Data";
+// import Carousel, { Pagination } from "react-native-snap-carousel";
+import Carousel from "react-native-reanimated-carousel";
+import { dataCarousel, itemData } from "../data/Data";
 import { styles } from "../assets/css/Style";
 import { functionBack, functionLog } from "../helpers/functionHelper";
 import { useFetchStore } from "../customeHooks/useFetchStore";
 import { SpecifiedView } from "../components/SpecifiedView";
-import { Loader } from "../components/Loader";
+import { Loader } from "../components/Loader"; 
+
+const { width, height } = Dimensions.get('window');
+
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ScreenView from "../components/ScreenView";
 const TAG = "dari HOME";
 functionLog("ini width handphonya", width);
 
@@ -27,11 +34,14 @@ export default Home = ({ navigation }) => {
   const [dataReady, setDataReady] = useState(false);
   const _carousel = useRef();
   const [{ stores, isLoadingStore, error }] = useFetchStore();
+
+  
   functionLog("dari home", `  isLoadingStore, ${isLoadingStore} `);
+  functionLog("dari home", `  stores, ${stores} `);
   functionLog("dari home", `  error , ${error} `);
+  const [activeIndex, setActiveIndex] = useState(0);
   const loding = true;
 
- 
   const _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity onPress={() => handleCarouselClick(item, index)}>
@@ -46,8 +56,6 @@ export default Home = ({ navigation }) => {
     );
   };
 
-
-
   const ItemGridMenu = ({ item, index }) => {
     return (
       <View style={styles.item}>
@@ -60,33 +68,31 @@ export default Home = ({ navigation }) => {
   };
 
   const handleMenuItemClick = async (item, index) => {
-    functionLog(TAG, `Clicked item:", ${item.id}, "at index:", ${index}`);  
+    functionLog(TAG, `Clicked item:", ${item.id}, "at index:", ${index}`);
 
-      switch (item.id) {
-        case 1:
-          navigation.navigate("Kitab", );
-          break; 
-        case 2:
-          navigation.navigate("Favorite");
-          break;
-        case 3:
-          if(dataLast == null){
-            return alert("Anda Belum Membaca Apapun..")
-           }
-          navigation.navigate("LastDetail", dataLast)
-        case 4:
-          break;
-        case 5:
-          Linking.openURL(
-            "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
-          );
-          break;
-        default:
-          // Handle case where item.id is not matched with any cases above
-          break;
-      }
-    
-    
+    switch (item.id) {
+      case 1:
+        navigation.navigate("Kitab");
+        break;
+      case 2:
+        navigation.navigate("Favorite");
+        break;
+      case 3:
+        if (dataLast == null) {
+          return alert("Anda Belum Membaca Apapun..");
+        }
+        navigation.navigate("LastDetail", dataLast);
+      case 4:
+        break;
+      case 5:
+        Linking.openURL(
+          "https://play.google.com/store/apps/details?id=id.kitabkuning.syamail.muhammadiyah.v2"
+        );
+        break;
+      default:
+        // Handle case where item.id is not matched with any cases above
+        break;
+    }
   };
 
   const handleCarouselClick = (item, index) => {
@@ -126,62 +132,62 @@ export default Home = ({ navigation }) => {
       </TouchableOpacity>
     </View>
   );
-  return (
-    <SpecifiedView className="">
-      <ScrollView className="">
-        <Carousel
-          // autoplay={true}
-          loop={true}
-          data={dataCarousel}
-          ref={_carousel}
-          renderItem={_renderItem}
-          sliderWidth={width}
-          itemWidth={width}
-          onSnapToItem={(index) => setActiveDot(index)}
-        />
 
-        <View className=" justify-center">
-          <Pagination
-            activeDotIndex={activeDot}
-            dotsLength={dataCarousel.length}
-            dotStyle={{
-              width: 10,
-            }}
-            containerStyle={{ marginTop: -60 }}
-            inactiveDotOpacity={0.6}
-            inactiveDotScale={0.8}
-            carouselRef={_carousel}
+  return (
+    <ScreenView>
+      <SpecifiedView className="">
+        <ScrollView  >
+          <Carousel
+            loop={false}
+            width={width}
+            height={200}
+            autoPlay={true}
+            data={dataCarousel}
+            scrollAnimationDuration={4000}
+            onSnapToItem={setActiveIndex}
+            renderItem={_renderItem}
           />
-        </View>
-        <View className="bg-[#FF0000] mt-[-10]">
-          <Text className="ml-3">Menu Kitab Kuning</Text>
-        </View>
-        <View style={styles.app}>
-          <FlatList
-            data={itemData}
-            numColumns={3}
-            style={{ padding: 5 }}
-            renderItem={ItemGridMenu}
-            keyExtractor={(itemData) => itemData.alt}
-            scrollEnabled={false}
-          />
-        </View>
-        <View className="bg-[#1eb019] h-8 justify-center">
-          <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
-        </View>
-        <View className="flex flex-row flex-wrap">
-          <FlatList
-            data={stores.toko_mitra}
-            horizontal={true}
-            renderItem={renderStoreItem}
-            keyExtractor={(toko_mitra) => toko_mitra.id_toko}
-          />
-        </View>
-        <View className="bg-[#1eb019] h-8 justify-center mb-20">
-          <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
-        </View>
-      </ScrollView>
-    </SpecifiedView>
+
+          <View className="" style={styles.pagination}>
+            {dataCarousel.map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.dot,
+                  index === activeIndex ? styles.activeDot : styles.inactiveDot,
+                ]}
+              />
+            ))}
+          </View>
+          <View className="bg-[#FF0000] mt-[-10]">
+            <Text className="ml-3">Menu Kitab Kuning</Text>
+          </View>
+          <View style={styles.app}>
+            <FlatList
+              data={itemData}
+              numColumns={3}
+              style={{ padding: 5 }}
+              renderItem={ItemGridMenu}
+              keyExtractor={(itemData) => itemData.alt}
+              scrollEnabled={false}
+            />
+          </View>
+          <View className="bg-[#1eb019] h-8 justify-center">
+            <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
+          </View>
+          <View className="flex flex-row flex-wrap">
+            <FlatList
+              data={stores.toko_mitra}
+              horizontal={true}
+              renderItem={renderStoreItem}
+              keyExtractor={(toko_mitra) => toko_mitra.id_toko}
+            />
+          </View>
+          <View className="bg-[#1eb019] h-8 justify-center mb-20">
+            <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
+          </View>
+        </ScrollView>
+      </SpecifiedView>
+    </ScreenView>
   );
 };
-

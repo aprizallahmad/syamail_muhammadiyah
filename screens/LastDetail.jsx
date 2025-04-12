@@ -1,7 +1,8 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import HTML from "react-native-render-html";
 import { functionLog } from "../helpers/functionHelper";
 import { SpecifiedView } from "../components/SpecifiedView";
+import Text from "../components/Text"
 
 export const LastDetail = ({ route }) => {
   let objData = JSON.parse(route.params);

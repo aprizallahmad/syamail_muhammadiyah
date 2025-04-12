@@ -10,9 +10,10 @@ import Color from "./assets/color/Color";
 import { handleSearch } from "./helpers/functionHelper";
 import { useState } from "react";
 import { Favorite } from "./screens/Favorite";
-import { LastDetail } from "./screens/LastDetail";
-const Stack = createNativeStackNavigator();
+import { LastDetail } from "./screens/LastDetail"; 
 
+
+const Stack = createNativeStackNavigator(); 
 
 export default Index = () => {
   return (

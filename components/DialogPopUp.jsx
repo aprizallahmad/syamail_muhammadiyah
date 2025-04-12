@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button, View } from "react-native";
 import Modal, { ModalButton, ModalContent, ModalFooter } from "react-native-modals";
-import { functionLog } from "../helpers/functionHelper";
-import { Text } from "react-native";
+import { functionLog } from "../helpers/functionHelper";  
+import Text from "../components/Text"
 
 export const DialogPopUp = ({navigation,  title, message, action }) => {
   const [visible, setVisible] = useState(true);

@@ -1,6 +1,10 @@
-import { Dimensions, Image, Text, View } from "react-native";
-import IMAGES from "../assets/banner";
+import { Dimensions, Image, View } from "react-native";
+import IMAGES from "../assets/banner"; 
+import Text from "../components/Text"
+ 
+
 export const width = Dimensions.get("window").width;
+export const height = Dimensions.get("window").height;
 
 export const NAMA_KITAB = "syamail_muhammadiyah";
 export const dataCarousel = [

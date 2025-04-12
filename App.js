@@ -4,6 +4,17 @@ import Index from "./Index";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { ModalPortal } from "react-native-modals";
+import { Provider as PaperProvider, DefaultTheme, useTheme  } from 'react-native-paper';
+import Color from "./assets/color/Color";
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    text: Color.primaryText, // set default text color
+    background: Color.primary,
+  },
+};
 
 
 export default function App() {
@@ -15,10 +26,17 @@ export default function App() {
     "ViewPropTypes will be removed from React Native, along with all other PropTypes and switch to a type system like TypeScript. If you need to continue using ViewPropTypes, migrate to the 'deprecated-react-native-prop-types' package", 
   ]);
 
+  ErrorUtils.setGlobalHandler((error, isFatal) => {
+    console.log("Custom global error:", error.message);
+  });
+  
+
   return (
     <Provider store={store}>
-      <Index/>
-      <ModalPortal />
+      <PaperProvider theme={theme}>
+        <Index />
+        <ModalPortal />
+      </PaperProvider>
     </Provider>
   );
 }

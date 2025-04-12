@@ -1,9 +1,11 @@
-import { Button, ScrollView, Text, View } from "react-native";
+import { Button, ScrollView, View } from "react-native";
 import HTML from "react-native-render-html";
 import { functionLog } from "../helpers/functionHelper";
 import { SpecifiedView } from "../components/SpecifiedView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import errorHandler from "../helpers/errHandler";
+import Text from "../components/Text"
+
 export const DetailKitab = ({ route }) => {
   let objData = route;
 
