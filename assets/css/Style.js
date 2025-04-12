@@ -1,4 +1,3 @@
-
 import Color from "../color/Color";
 import { Dimensions } from "react-native";
 
@@ -8,8 +7,8 @@ export const height = Dimensions.get("window").height;
 export const styles = {
   app: {
     flex: 3, // the number of columns you want to devide the screen into
-    marginHorizontal: "auto",
-    width: { width },
+    alignSelf : "center",
+    width: width,
     marginTop: 10,
   },
   defaultStyle: {
@@ -39,10 +38,10 @@ export const styles = {
     alignItems: "center",
 
     // my visual styles; not important for the grid
-    padding: 20,
+    padding: 5,
     borderWidth: 1.5,
     borderRadius: 10,
-    borderColor: "#F0F0F0",
+    borderColor: Color.white,
   },
   pagination: {
     flexDirection: "row",

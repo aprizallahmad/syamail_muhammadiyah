@@ -5,6 +5,7 @@ import { SpecifiedView } from "../components/SpecifiedView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import errorHandler from "../helpers/errHandler";
 import Text from "../components/Text"
+import ScreenView from "../components/ScreenView";
 
 export const DetailKitab = ({ route }) => {
   let objData = route;
@@ -12,22 +13,23 @@ export const DetailKitab = ({ route }) => {
   functionLog("data detail kitab", objData?.params);
 
   const handleFavorite = async (data) => {
-
     try {
-      let dataFav = await AsyncStorage.getItem("favorite")
-      .then((res) => JSON.parse(res || '[]'))
-        .catch(errorHandler);
-      functionLog("data favorite " , dataFav)
-      const favArray = dataFav !== null ? JSON.parse(favArray) : [];
-      functionLog("data favArray " , favArray)
-      // let favThis = await AsyncStorage.setItem("favorite", JSON.stringify(data))
-      // functionLog("data favArray " , favThis) 
-    } catch (error) {
-      errorHandler(error)
-    }
+      const result = await AsyncStorage.getItem("favorite");
+      functionLog("data favorite result", result);
 
-  }
+      const dataFav = result ? JSON.parse(result) : [];
+      functionLog("data favorite", dataFav);
+  
+      // Lanjutkan logic kamu di sini, misalnya update favorite:
+      // dataFav.push(data); atau filter, dsb.
+  
+    } catch (error) {
+      errorHandler(error);
+    }
+  };
+  
   return (
+    <ScreenView>
     <SpecifiedView>
       <View>
         <View>
@@ -36,7 +38,7 @@ export const DetailKitab = ({ route }) => {
             onPress={() => {
               handleFavorite(objData.params)
             }}
-          />
+            />
         </View>
         <ScrollView>
           <View>
@@ -50,5 +52,6 @@ export const DetailKitab = ({ route }) => {
         </ScrollView>
       </View>
     </SpecifiedView>
+            </ScreenView>
   );
 };

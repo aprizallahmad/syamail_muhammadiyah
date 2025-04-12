@@ -140,7 +140,7 @@ export default Home = ({ navigation }) => {
           <Carousel
             loop={false}
             width={width}
-            height={200}
+            height={150}
             autoPlay={true}
             data={dataCarousel}
             scrollAnimationDuration={4000}
