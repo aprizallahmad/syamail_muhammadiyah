@@ -11,7 +11,6 @@ const storeReducer = (state = initialStore , action ) => {
     const {type , payload } = action
     switch (type) {
         case STORE_SET:
-            console.log(payload,'dari storeReducer ');
             return {
                 ...state, 
                 isLoadingStore : false, 

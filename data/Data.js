@@ -1,7 +1,10 @@
 import { Dimensions, Image, View } from "react-native";
-import IMAGES from "../assets/banner"; 
-import Text from "../components/Text"
- 
+import IMAGES from "../assets/banner";
+import Text from "../components/Text";
+import { Icons } from "../components/Icons";
+import Home from "../screens/Home";
+import { Favorite } from "../screens/Favorite";
+import { LastDetail } from "../screens/LastDetail";
 
 export const width = Dimensions.get("window").width;
 export const height = Dimensions.get("window").height;
@@ -42,14 +45,7 @@ export const itemData = [
         source={require("../assets/png/icon512.jpg")}
       />
     ),
-    title_menu: (
-       
-        <Text style={{textAlign: "center"}} 
-        >
-          Daftar Isi
-        </Text>
-      
-    ),
+    title_menu: <Text style={{ textAlign: "center" }}>Daftar Isi</Text>,
   },
   {
     id: 2,
@@ -59,7 +55,7 @@ export const itemData = [
         source={require("../assets/png/menu_favorite.png")}
       />
     ),
-    title_menu: <Text style={{textAlign: "center"}}>Ditandai</Text>,
+    title_menu: <Text style={{ textAlign: "center" }}>Ditandai</Text>,
   },
   {
     id: 3,
@@ -69,8 +65,7 @@ export const itemData = [
         source={require("../assets/png/menu_recent.png")}
       />
     ),
-    title_menu: <Text style={{textAlign: "center"}} 
-        >Bacaan Terakhir</Text>,
+    title_menu: <Text style={{ textAlign: "center" }}>Bacaan Terakhir</Text>,
   },
 
   {
@@ -81,8 +76,7 @@ export const itemData = [
         source={require("../assets/png/menu_setting.png")}
       />
     ),
-    title_menu: <Text style={{textAlign: "center"}} 
-        >Setting</Text>,
+    title_menu: <Text style={{ textAlign: "center" }}>Setting</Text>,
   },
 
   {
@@ -93,8 +87,7 @@ export const itemData = [
         source={require("../assets/png/menu_review.png")}
       />
     ),
-    title_menu: <Text style={{textAlign: "center"}} 
-        >Beri Nilai</Text>,
+    title_menu: <Text style={{ textAlign: "center" }}>Beri Nilai</Text>,
   },
 
   {
@@ -105,8 +98,7 @@ export const itemData = [
         source={require("../assets/png/menu_other_apps.png")}
       />
     ),
-    title_menu: <Text style={{textAlign: "center"}} 
-        >Aplikasi Lain</Text>,
+    title_menu: <Text style={{ textAlign: "center" }}>Aplikasi Lain</Text>,
   },
   {
     id: 7,
@@ -116,8 +108,7 @@ export const itemData = [
         source={require("../assets/png/menu_info.png")}
       />
     ),
-    title_menu: <Text style={{textAlign: "center"}} 
-        >Tentang Aps</Text>,
+    title_menu: <Text style={{ textAlign: "center" }}>Tentang Aps</Text>,
   },
   {
     id: 8,
@@ -129,8 +120,7 @@ export const itemData = [
         />
       </View>
     ),
-    title_menu: <Text style={{textAlign: "center"}} 
-        >Informasi</Text>,
+    title_menu: <Text style={{ textAlign: "center" }}>Informasi</Text>,
   },
   {
     id: 9,
@@ -140,10 +130,11 @@ export const itemData = [
         source={require("../assets/png/logo_pesantren.png")}
       />
     ),
-    title_menu: <Text style={{textAlign: "center"}} 
-        >Profil</Text>,
+    title_menu: <Text style={{ textAlign: "center" }}>Profil</Text>,
   },
 ];
+// data dummy 
+
 export const SECTIONS = [
   {
     title_section: "Made for you",

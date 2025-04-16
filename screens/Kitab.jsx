@@ -1,21 +1,16 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  BackHandler,
-  Button,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import Text from "../components/Text";
 
 import { functionBack, functionLog } from "../helpers/functionHelper";
 import { useFetchBook } from "../customeHooks/useFetchBook";
 import { SpecifiedView } from "../components/SpecifiedView";
 import { Loader } from "../components/Loader";
-import { urlFetchBook } from "../store/actions/actionCreator";
+import {
+  JSON_FORMAT,
+  ORIGIN,
+  urlFetchBook,
+} from "../store/actions/actionCreator";
 import { DialogPopUp } from "../components/DialogPopUp";
 import Modal, {
   ModalButton,
@@ -26,9 +21,14 @@ import { BOOK_SET } from "../store/actions/actionType";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import errorHandler from "../helpers/errHandler";
 import ScreenView from "../components/ScreenView";
+import { useRoute } from "@react-navigation/native";
+import { useFetchBooksId } from "../customeHooks/useFetchBooksId";
 let dataBooksStorage = "";
 
 export default Kitab = ({ navigation }) => {
+  const route = useRoute();
+  const table_name = route?.params;
+
   const [books, setBooks] = useState();
   const [booksStorage, setBooksStorage] = useState();
   const [visible, setVisible] = useState();
@@ -36,18 +36,14 @@ export default Kitab = ({ navigation }) => {
   const [textContent, setTextContent] = useState(
     "Data Kitab kami simpan di cloud, untuk penggunaan pertama silakan download dahulu"
   );
-  const dataReady = navigation.dispatch((state) => {
-    functionLog("======================", state.dataReady);
-    return state.params ? true : false;
-  }); 
-  functionLog("ini data book storage", booksStorage?.length);
-  functionLog("dataReady = navigation", dataReady);
+  const [{ booksID, isLoadingBooksID, errorBooksID }] =
+    useFetchBooksId(table_name);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dataBooksStorage = await AsyncStorage.getItem("books");
-  
+        const dataBooksStorage = await AsyncStorage.getItem(table_name);
+
         if (dataBooksStorage == null) {
           setVisible(true);
         } else {
@@ -59,35 +55,50 @@ export default Kitab = ({ navigation }) => {
         functionLog("error", error);
       }
     };
-  
+
     fetchData();
   }, []);
-  
 
   const fetchBookAction = async () => {
     try {
-      const response = await fetch(urlFetchBook);
+      const response = await fetch(`${ORIGIN}${table_name}${JSON_FORMAT}`);
       if (!response.ok) {
         throw errorHandler(response);
       }
 
       const responseJSON = await response.json();
-      // functionLog("fetchBookAction responseJSON", responseJSON);
-      setBooks(responseJSON);
-      await AsyncStorage.setItem(
-        "books",
-        JSON.stringify(responseJSON?.syamail_muhammadiyah)
+
+      const stringifiedData = JSON.stringify(responseJSON[table_name]);
+      console.log(
+        "Ukuran data yang akan disimpan:",
+        (stringifiedData.length / 1024).toFixed(2),
+        "KB"
       );
-      dataBooksStorage = await AsyncStorage.getItem("books");
+
+      setBooksStorage(stringifiedData);
+      await AsyncStorage.setItem(table_name, stringifiedData);
+
+      dataBooksStorage = await AsyncStorage.getItem(table_name);
       dataBooksStorage = JSON.parse(dataBooksStorage);
-      // functionLog("databook storage", dataBooksStorage)
+      setBooksStorage(dataBooksStorage);
+
       setMessageModal("Done");
       setTextContent("Data Berhasil Di unduh..");
     } catch (err) {
       setMessageModal("Error..!");
-      setTextContent(
-        "Data Kitab kami simpan di cloud, untuk penggunaan pertama silakan download dahulu, Silahkan Cek Jaringan Anda"
-      );
+      if (err.message == "database or disk is full (code 13 SQLITE_FULL)") {
+        setTextContent(`${err.message} data tidak tersimpan dihpmu`);
+        setBooksStorage;
+      } else {
+        console.log(
+          "Full error message:",
+          JSON.stringify(err.message, null, 2)
+        );
+
+        setTextContent(
+          "Data Kitab kami simpan di cloud, untuk penggunaan pertama silakan download dahulu, Silahkan Cek Jaringan Anda"
+        );
+      }
 
       errorHandler(err);
       functionLog("error dari fetchBookAction", err);
@@ -103,7 +114,11 @@ export default Kitab = ({ navigation }) => {
             if (messageModal == "Done") {
               setVisible(false);
               setBooksStorage(dataBooksStorage);
+            } else if (messageModal == "Error..!") {
+              setBooksStorage(booksID[table_name]);
+              setVisible(false);
             } else {
+              functionLog("masuk else messageModal", messageModal);
               fetchBookAction();
             }
           }}
@@ -122,9 +137,7 @@ export default Kitab = ({ navigation }) => {
             setVisible(false);
           }}
         >
-          <Text>
-            {item.id}. {item.judul_arab}
-          </Text>
+          <Text> {item.judul_arab} </Text>
           <Text>
             {item.id}. {item.judul_indonesia}
           </Text>
@@ -137,7 +150,7 @@ export default Kitab = ({ navigation }) => {
     // console.log("ini books " + books.syamail_muhammadiyah)
     try {
       const filter = booksStorage.find((x) => x.id === id);
-      console.error("ini klik id detail " + id);
+      // console.error("ini klik id detail " + id);
       navigation.navigate("Detail", filter);
       await AsyncStorage.setItem("last", JSON.stringify(filter));
     } catch (error) {
@@ -166,10 +179,12 @@ export default Kitab = ({ navigation }) => {
                     borderBottomColor: "#D1D1D1",
                   }}
                 >
-                  <Text> Alert </Text>
+                  <Text className=" text-slate-600"> Alert </Text>
                 </View>
                 <View className="mt-2 justify-center items-center">
-                  <Text className="text-center">{textContent}</Text>
+                  <Text className="text-center text-slate-600">
+                    {textContent}
+                  </Text>
                 </View>
               </ModalContent>
             </Modal>
