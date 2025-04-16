@@ -118,7 +118,6 @@ export const styles = {
     height: 30,
   },
   containerIndex : { 
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,

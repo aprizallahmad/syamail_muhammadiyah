@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Animatable from "react-native-animatable";
 import Icon from "./components/Icons";
 import Color from "./assets/color/Color";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { styles } from "./assets/css/Style";
 import Kitab from "./screens/Kitab";
 import ScreenView from "./components/ScreenView";
@@ -40,7 +40,7 @@ export default Index = () => {
       <TouchableOpacity
         onPress={onPress}
         activeOpacity={1}
-        style={[styles.containerIndex, { top: 0 }]}
+        style={[styles.containerIndex]}
       >
         <Animatable.View ref={viewRef} duration={1000}>
           <Icon
@@ -54,37 +54,45 @@ export default Index = () => {
   };
 
   return (
-      <NavigationContainer>
-        <SafeAreaView style={{ flex: 1 }}>
-          <Tab.Navigator
-            screenOptions={{
-              headerShown: false,
-              tabBarStyle: {
-                height: 60,
-                position: "absolute",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 8,
-              },
-            }}
-          >
-            {TabArr.map((item, index) => {
-              return (
-                <Tab.Screen
-                  key={index}
-                  name={item.route}
-                  component={item.component}
-                  options={{
-                    tabBarShowLabel: false,
-                    tabBarButton: (props) => (
-                      <TabButton {...props} item={item} />
-                    ),
-                  }}
-                />
-              );
-            })}
-          </Tab.Navigator>
-        </SafeAreaView>
-      </NavigationContainer>
+    <NavigationContainer> 
+      <SafeAreaView style={{ flex: 1 }}>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarStyle: {
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0, 
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+              height: 60,
+              elevation: 10, // Android shadow 
+              shadowOffset: { width: 0, height: -3 },
+              shadowOpacity: 0.1,
+              shadowRadius: 4,
+            },
+            safeAreaInsets: { bottom: 0 },
+          }}
+        >
+          {TabArr.map((item, index) => {
+            return (
+              <Tab.Screen
+                key={index}
+                name={item.route}
+                component={item.component}
+                options={{
+                  tabBarShowLabel: false,
+                  tabBarButton: (props) => (
+                    <TabButton {...props} item={item} />
+                  ),
+                }}
+              />
+            );
+          })}
+        </Tab.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
   );
 };
+

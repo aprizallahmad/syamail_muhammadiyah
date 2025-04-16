@@ -68,11 +68,15 @@ export default Home = ({ navigation }) => {
   const _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity onPress={() => handleCarouselClick(item, index)}>
-        <ImageBackground>
+        <ImageBackground
+        source={item.image}
+        style={{ width: width, height: 150 }}
+        resizeMode="contain" // atau "stretch" / "contain", tergantung kebutuhan
+        >
           <Image
             source={item.image}
-            style={{ height: width * 0.5, width: width }}
-            resizeMode={item.id == 4 ? "contain" : "center"}
+            style={{ height: 150, width: width }}
+            resizeMode="contain"
           />
         </ImageBackground>
       </TouchableOpacity>
@@ -214,7 +218,7 @@ export default Home = ({ navigation }) => {
   return (
     <ScreenView style={{ flex: 1 }}>
       <SpecifiedView className="" style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
+        <ScrollView  >
           <Carousel
             loop={false}
             width={width}

@@ -6,7 +6,7 @@ import { useTheme } from 'react-native-paper';
 export default function ScreenView({ children, style }) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }, style]}>
+    <View style={[{ flex: 1, backgroundColor: colors.background }, style]}>
       {children}
     </View>
   );
@@ -14,6 +14,6 @@ export default function ScreenView({ children, style }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
   },
 });

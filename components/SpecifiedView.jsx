@@ -1,10 +1,15 @@
-import { Platform, SafeAreaView as IosSafeAre } from "react-native";
-import { SafeAreaView as AndroidSafeArea } from "react-native-safe-area-context";
+import { Platform, } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Color from "../assets/color/Color";
+import { StatusBar } from "expo-status-bar";
 
-export const SpecifiedView = ({children , style})=> {
+export const SpecifiedView = ({ children, style }) => {
     return Platform.OS === 'ios' ? (
-        <IosSafeAre style={style}>{children}</IosSafeAre>
+        <SafeAreaView edges={['top', 'left', 'right']} style={[{ flex: 1, }, style]}>
+            {children}</SafeAreaView>
     ) : (
-        <AndroidSafeArea className="mt-[-35]" style={style}>{children}</AndroidSafeArea>
+        <SafeAreaView edges={['top', 'left', 'right', ]} style={[{ flex: 1, }, style]}> 
+        <StatusBar backgroundColor={Color.white300}/>
+        {children}</SafeAreaView>
     )
 }
