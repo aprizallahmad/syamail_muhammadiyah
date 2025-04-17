@@ -10,8 +10,7 @@ import Icon from "./components/Icons";
 import Color from "./assets/color/Color";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { styles } from "./assets/css/Style";
-import Kitab from "./screens/Kitab";
-import ScreenView from "./components/ScreenView";
+import Kitab from "./screens/Kitab"; 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,7 +54,7 @@ export default Index = () => {
 
   return (
     <NavigationContainer> 
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']} >
         <Tab.Navigator
           screenOptions={{
             headerShown: false,

@@ -7,12 +7,19 @@ export const height = Dimensions.get("window").height;
 export const styles = {
   app: {
     flex: 3, // the number of columns you want to devide the screen into
-    alignSelf : "center",
+    alignSelf: "center",
     width: width,
     marginTop: 10,
   },
   defaultStyle: {
     backgroundColor: Color.primary,
+  },
+  containerDefault: {
+    boxShadow: '0px 0px 14px 1px rgba(140, 140, 140, 0.20)', 
+    borderRadius: 16, 
+    paddingHorizontal : 8 , 
+    paddingVertical : 8,   
+    marginBottom: 5,
   },
   sectionHeader: {
     fontWeight: "800",
@@ -39,26 +46,24 @@ export const styles = {
     borderWidth: 1.5,
     borderRadius: 10,
     borderColor: Color.white,
-    marginHorizontal : 2, 
-    marginVertical : 2, 
+    marginHorizontal: 2,
+    marginVertical: 2,
   },
   pagination: {
     flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 30,
+    justifyContent: "center", 
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    marginHorizontal: 2,
-    marginTop : -25
+    marginHorizontal: 2, 
   },
   activeDot: {
-    backgroundColor: Color.white,
+    backgroundColor: Color.black500,
   },
   inactiveDot: {
-    backgroundColor: "#D3D3D3",
+    backgroundColor: Color.black100,
   },
   screen1: {
     flex: 1,
@@ -117,7 +122,7 @@ export const styles = {
     width: 30,
     height: 30,
   },
-  containerIndex : { 
+  containerIndex: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,

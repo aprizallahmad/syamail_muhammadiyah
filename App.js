@@ -11,8 +11,8 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    text: Color.primaryText, // set default text color
-    background: Color.primary,
+    text: Color.black100, // set default text color
+    background: Color.white,
   },
 };
 

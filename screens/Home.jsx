@@ -27,8 +27,7 @@ import { SpecifiedView } from "../components/SpecifiedView";
 import { Loader } from "../components/Loader";
 
 import ArrowRight from "../assets/svg/ic_more.svg"; // ← Import SVG
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ScreenView from "../components/ScreenView";
+import AsyncStorage from "@react-native-async-storage/async-storage"; 
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -48,7 +47,7 @@ export default Home = ({ navigation }) => {
   const [{ channels, isLoadingChannel, errorChannel }] =
     useFetchChannelYoutube();
 
-  let dataWithMore = []; 
+  let dataWithMore = [];
 
   if (isLoadingListBooks == false) {
     // functionLog(
@@ -60,25 +59,27 @@ export default Home = ({ navigation }) => {
     //   )}`
     // );
     dataWithMore = [
-      ...listBooks["kitab-kuning"].slice(0,3),
-      { isMoreButton: true, nama_kitab_indonesia: "Kitab lainnya" , id : "999" },
+      ...listBooks["kitab-kuning"].slice(0, 3),
+      { isMoreButton: true, nama_kitab_indonesia: "Kitab lainnya", id: "999" },
     ];
   }
 
   const _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity onPress={() => handleCarouselClick(item, index)}>
-        <ImageBackground
-        source={item.image}
-        style={{ width: width, height: 150 }}
-        resizeMode="contain" // atau "stretch" / "contain", tergantung kebutuhan
-        >
-          <Image
+        <View style={styless.shadowWrapper} >
+          <ImageBackground
             source={item.image}
-            style={{ height: 150, width: width }}
-            resizeMode="contain"
-          />
-        </ImageBackground>
+            style={styless.imageBackground}
+            resizeMode="cover" // atau "stretch" / "contain", tergantung kebutuhan
+          >
+            <Image
+              source={item.image}
+              style={styless.image}
+              resizeMode="cover"
+            />
+          </ImageBackground>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -166,12 +167,12 @@ export default Home = ({ navigation }) => {
 
   const handleMenuItemClick = async (item, index) => {
     functionLog(TAG, `Clicked item:  ${item.id}, "at index:", ${index}`);
-    switch (item.id) { 
-      case "999" : 
-      navigation.navigate("More Kitab");
+    switch (item.id) {
+      case "999":
+        navigation.navigate("More Kitab");
         break;
       default:
-        navigation.navigate("Kitab", item.nama_tabel_kitab); 
+        navigation.navigate("Kitab", item.nama_tabel_kitab);
         // Handle case where item.id is not matched with any cases above
         break;
     }
@@ -215,21 +216,30 @@ export default Home = ({ navigation }) => {
     </View>
   );
 
-  return (
-    <ScreenView style={{ flex: 1 }}>
-      <SpecifiedView className="" style={{ flex: 1 }}>
-        <ScrollView  >
+  return ( 
+      <SpecifiedView className="" style={{  paddingHorizontal: 16, marginTop: 16, }}>
+        <View style={styles.containerDefault}>
+          <Text>Assalaamu'alaikum </Text>
+        </View>
+
+        <View style = {styles.containerDefault} > 
+        </View> 
+        <View style={styles.containerDefault}>
           <Carousel
-            loop={false}
-            width={width}
-            height={150}
+            loop={true}
+            width={width - 45}
+            height={250}
             autoPlay={true}
             data={dataCarousel}
-            scrollAnimationDuration={4000}
+            scrollAnimationDuration={3000}
             onSnapToItem={setActiveIndex}
             renderItem={_renderItem}
+            mode="parallax"
+            modeConfig={{ parallaxScrollingOffset: 20 }}
+            panGestureHandlerProps={{
+              activeOffsetX: [-10, 10],
+            }}
           />
-
           <View className="" style={styles.pagination}>
             {dataCarousel.map((_, index) => (
               <View
@@ -241,10 +251,9 @@ export default Home = ({ navigation }) => {
               />
             ))}
           </View>
-          <View className="bg-[#FF0000] mt-[-10]">
-            <Text className="ml-3">Menu Kitab Kuning</Text>
-          </View>
-
+        </View>
+        <View style={styles.containerDefault}>
+          <Text className="">Menu Kitab Kuning</Text>
           <View className="flex flex-row flex-wrap">
             <FlatList
               data={dataWithMore}
@@ -255,11 +264,9 @@ export default Home = ({ navigation }) => {
               }
             />
           </View>
-
-          <View className="bg-[#FF0000] mt-[-10]">
-            <Text className="ml-3">List Channel Youtube</Text>
-          </View>
-
+        </View>
+        <View style={styles.containerDefault}>
+          <Text className="ml-3">List Channel Youtube</Text>
           <View className="flex flex-row flex-wrap">
             <FlatList
               data={channels.ChannelYoutube}
@@ -268,25 +275,59 @@ export default Home = ({ navigation }) => {
               keyExtractor={(channels, index) => `${channels.id_toko}-${index}`}
             />
           </View>
-
-          <View className="bg-[#1eb019] h-8 justify-center">
-            <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
-          </View>
-          <View className="flex flex-row flex-wrap">
-            <FlatList
-              data={stores.toko_mitra}
-              horizontal={true}
-              renderItem={renderStoreItem}
-              keyExtractor={(toko_mitra, index) =>
-                `${toko_mitra.id_toko}-${index}`
-              }
-            />
-          </View>
-          <View className="bg-[#1eb019] h-8 justify-center mb-20">
-            <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
-          </View>
-        </ScrollView>
-      </SpecifiedView>
-    </ScreenView>
+        </View>
+        <View className="bg-[#1eb019] h-8 justify-center">
+          <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
+        </View>
+        <View className="flex flex-row flex-wrap">
+          <FlatList
+            data={stores.toko_mitra}
+            horizontal={true}
+            renderItem={renderStoreItem}
+            keyExtractor={(toko_mitra, index) =>
+              `${toko_mitra.id_toko}-${index}`
+            }
+          />
+        </View>
+        <View className="bg-[#1eb019] h-8 justify-center mb-20">
+          <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
+        </View>
+      </SpecifiedView> 
   );
 };
+
+
+const styless = StyleSheet.create({
+  shadowWrapper: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
+    backgroundColor: '#fff', // penting untuk iOS shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5, // Android shadow
+    marginBottom: 8,
+  },
+  imageBackground: {
+    flex: 1,
+    borderRadius: 8,
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden', // biar radius-nya jalan
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
+  },
+  carousel: {
+    marginBottom: 5,
+    borderBottomStartRadius: 16,
+    borderBottomEndRadius: 16,
+    boxShadow: '0px 0px 14px 1px rgba(140, 140, 140, 0.20)',
+    paddingVertical: 8,
+  }
+
+});

@@ -19,8 +19,7 @@ import Modal, {
 } from "react-native-modals";
 import { BOOK_SET } from "../store/actions/actionType";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import errorHandler from "../helpers/errHandler";
-import ScreenView from "../components/ScreenView";
+import errorHandler from "../helpers/errHandler"; 
 import { useRoute } from "@react-navigation/native";
 import { useFetchBooksId } from "../customeHooks/useFetchBooksId";
 let dataBooksStorage = "";
@@ -158,8 +157,7 @@ export default Kitab = ({ navigation }) => {
     }
   };
 
-  return (
-    <ScreenView>
+  return ( 
       <SpecifiedView className="flex-1">
         {visible ? (
           <View>
@@ -194,7 +192,6 @@ export default Kitab = ({ navigation }) => {
             <FlatList data={booksStorage} renderItem={renderBookItem} />
           </View>
         )}
-      </SpecifiedView>
-    </ScreenView>
+      </SpecifiedView> 
   );
 };

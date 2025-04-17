@@ -1,9 +1,7 @@
 import { FlatList, View } from "react-native"
 import { SpecifiedView } from "../components/SpecifiedView"
 import AsyncStorage from "@react-native-async-storage/async-storage" 
-import Text from "../components/Text"
-import ScreenView from "../components/ScreenView"
-
+import Text from "../components/Text" 
 
 export const Favorite = ({route})=> {
 
@@ -28,8 +26,7 @@ const renderBookItem = ({ item }) => {
       </View>
     );
   };
-    return(
-      <ScreenView>
+    return( 
 
         <SpecifiedView>
             <View>
@@ -38,7 +35,6 @@ const renderBookItem = ({ item }) => {
             renderItem={renderBookItem}
             />
         </View>
-        </SpecifiedView>
-            </ScreenView>
+        </SpecifiedView> 
     )
 }
