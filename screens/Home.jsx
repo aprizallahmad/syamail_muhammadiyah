@@ -12,10 +12,8 @@ import {
   Alert,
   Animated,
 } from "react-native";
-import { CurvedBottomBarExpo } from "react-native-curved-bottom-bar";
 import Text from "../components/Text";
 
-import { SafeAreaView } from "react-native-safe-area-context";
 // import Carousel, { Pagination } from "react-native-snap-carousel";
 import Carousel from "react-native-reanimated-carousel";
 import { dataCarousel, itemData } from "../data/Data";
@@ -27,10 +25,8 @@ import { SpecifiedView } from "../components/SpecifiedView";
 import { Loader } from "../components/Loader";
 
 import ArrowRight from "../assets/svg/ic_more.svg"; // ← Import SVG
-import AsyncStorage from "@react-native-async-storage/async-storage"; 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { NavigationContainer } from "@react-navigation/native";
 import Color from "../assets/color/Color";
 import { useFetchChannelYoutube } from "../customeHooks/useFetchChannelYoutube";
 
@@ -48,6 +44,7 @@ export default Home = ({ navigation }) => {
     useFetchChannelYoutube();
 
   let dataWithMore = [];
+
 
   if (isLoadingListBooks == false) {
     // functionLog(
@@ -98,14 +95,14 @@ export default Home = ({ navigation }) => {
       >
         <TouchableOpacity
           onPress={() => handleMenuItemClick(item, index)}
-          style={{
+          style={[styless.imageBackground,  {
             width: width * 0.3,
             height: width * 0.3,
             // backgroundColor: isLainnya ? Color.white : Color.red,
             borderRadius: 12,
             alignItems: "center",
             justifyContent: "center",
-          }}
+          }]}
         >
           {item.nama_kitab_indonesia === "Kitab lainnya" ? (
             <ArrowRight
@@ -120,7 +117,7 @@ export default Home = ({ navigation }) => {
           ) : (
             <Image
               source={{ uri: item.url_gambar_kitab }}
-              style={{ height: width * 0.3, width: width * 0.3 }}
+              style={[styless.image ,{ height: width * 0.4 , width: width * 0.3 }]}
             />
           )}
           <Text className="  font-medium text-center ">
@@ -216,83 +213,83 @@ export default Home = ({ navigation }) => {
     </View>
   );
 
-  return ( 
-      <SpecifiedView className="" style={{  paddingHorizontal: 16, marginTop: 16, }}>
-        <View style={styles.containerDefault}>
-          <Text>Assalaamu'alaikum </Text>
-        </View>
-
-        <View style = {styles.containerDefault} > 
-        </View> 
-        <View style={styles.containerDefault}>
-          <Carousel
-            loop={true}
-            width={width - 45}
-            height={250}
-            autoPlay={true}
-            data={dataCarousel}
-            scrollAnimationDuration={3000}
-            onSnapToItem={setActiveIndex}
-            renderItem={_renderItem}
-            mode="parallax"
-            modeConfig={{ parallaxScrollingOffset: 20 }}
-            panGestureHandlerProps={{
-              activeOffsetX: [-10, 10],
-            }}
-          />
-          <View className="" style={styles.pagination}>
-            {dataCarousel.map((_, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.dot,
-                  index === activeIndex ? styles.activeDot : styles.inactiveDot,
-                ]}
-              />
-            ))}
-          </View>
-        </View>
-        <View style={styles.containerDefault}>
-          <Text className="">Menu Kitab Kuning</Text>
-          <View className="flex flex-row flex-wrap">
-            <FlatList
-              data={dataWithMore}
-              horizontal={true}
-              renderItem={ItemGridMenu}
-              keyExtractor={(kitabKuning, index) =>
-                `${kitabKuning.id}-${index}`
-              }
+  return (
+    <SpecifiedView className="" style={{ paddingHorizontal: 16, marginTop: 16, }}>
+      <View style={styles.containerDefault}>
+        <Text>Assalaamu'alaikum </Text>
+      </View>
+      <View style={styles.containerDefault}>
+        <Carousel
+          loop={true}
+          width={width - 45}
+          height={250}
+          autoPlay={true}
+          data={dataCarousel}
+          scrollAnimationDuration={3000}
+          onSnapToItem={setActiveIndex}
+          renderItem={_renderItem}
+          mode="parallax"
+          modeConfig={{ parallaxScrollingOffset: 20 }}
+          panGestureHandlerProps={{
+            activeOffsetX: [-10, 10],
+          }}
+        />
+        <View className="" style={styles.pagination}>
+          {dataCarousel.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.dot,
+                index === activeIndex ? styles.activeDot : styles.inactiveDot,
+              ]}
             />
-          </View>
+          ))}
         </View>
-        <View style={styles.containerDefault}>
-          <Text className="ml-3">List Channel Youtube</Text>
-          <View className="flex flex-row flex-wrap">
-            <FlatList
-              data={channels.ChannelYoutube}
-              horizontal={true}
-              renderItem={renderChannels}
-              keyExtractor={(channels, index) => `${channels.id_toko}-${index}`}
-            />
-          </View>
-        </View>
-        <View className="bg-[#1eb019] h-8 justify-center">
-          <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
-        </View>
+      </View>
+      <View style={styles.containerDefault}>
+        <Text className="">Menu Kitab Kuning</Text>
         <View className="flex flex-row flex-wrap">
           <FlatList
-            data={stores.toko_mitra}
+            data={dataWithMore}
             horizontal={true}
-            renderItem={renderStoreItem}
-            keyExtractor={(toko_mitra, index) =>
-              `${toko_mitra.id_toko}-${index}`
+            nestedScrollEnabled={true}
+            renderItem={ItemGridMenu}
+            keyExtractor={(kitabKuning, index) =>
+              `${kitabKuning.id}-${index}`
             }
           />
         </View>
-        <View className="bg-[#1eb019] h-8 justify-center mb-20">
-          <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
+      </View>
+      <View style={styles.containerDefault}>
+        <Text className="ml-3">List Channel Youtube</Text>
+        <View className="flex flex-row flex-wrap">
+          <FlatList
+            data={channels.ChannelYoutube}
+            horizontal={true}
+            nestedScrollEnabled={true}
+            renderItem={renderChannels}
+            keyExtractor={(channels, index) => `${channels.id_toko}-${index}`}
+          />
         </View>
-      </SpecifiedView> 
+      </View>
+      <View className="bg-[#1eb019] h-8 justify-center">
+        <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
+      </View>
+      <View className="flex flex-row flex-wrap">
+        <FlatList
+          data={stores.toko_mitra}
+          horizontal={true}
+          renderItem={renderStoreItem}
+          nestedScrollEnabled={true}
+          keyExtractor={(toko_mitra, index) =>
+            `${toko_mitra.id_toko}-${index}`
+          }
+        />
+      </View>
+      <View className="bg-[#1eb019] h-8 justify-center mb-20">
+        <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
+      </View>
+    </SpecifiedView>
   );
 };
 
