@@ -141,7 +141,7 @@ export default Home = ({ navigation }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() => handleMenuItemClick(item, index)}
+          onPress={() => handleStoreClick(item, index)}
           style={{
             width: width * 0.3,
             height: width * 0.3,

@@ -9,13 +9,13 @@ export const SpecifiedView = ({ children, style }) => {
     const { colors } = useTheme();
     return Platform.OS === 'ios' ? (
         <ScrollView>
-            <View style={[{ flex: 1, backgroundColor: colors.background }, style]}>
+            <View style={[{ flex: 1, backgroundColor: colors.background ,  marginTop: 16,}, style]}>
                 {children}
             </View>
         </ScrollView>
     ) : (
         <ScrollView>
-            <View style={[{ flex: 1, backgroundColor: colors.background }, style]}>
+            <View style={[{ flex: 1, backgroundColor: colors.background,  marginTop: 46 }, style] }>
                 {children}
             </View>
         </ScrollView>
