@@ -11,8 +11,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { SpecifiedView } from "../components/SpecifiedView";
-import BottomSheet from "@gorhom/bottom-sheet";
+import { SpecifiedView } from "../components/SpecifiedView"; 
 import { Button } from "react-native-paper";
 export default Settings = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -202,18 +201,7 @@ export default Settings = () => {
 
       <Button onPress={() => bottomSheetRef.current?.expand()}>
         <Text> aldkfa;lfdkjaf </Text>
-      </Button>
-
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={-1} // default hidden
-        snapPoints={snapPoints}
-        enablePanDownToClose={true}
-      >
-        <View style={{ padding: 20 }}>
-          <Text>Ini isi bottom sheet</Text>
-        </View>
-      </BottomSheet>
+      </Button> 
     </SpecifiedView>
   );
 };

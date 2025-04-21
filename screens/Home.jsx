@@ -176,7 +176,7 @@ export default Home = ({ navigation }) => {
           alignItems: "center",
           alignContent: "center",
           marginBottom: "5%",
-        }}
+        }]}
       >
         <TouchableOpacity
           onPress={() => handleStoreClick(item, index)}
