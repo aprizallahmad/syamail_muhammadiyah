@@ -169,7 +169,7 @@ export default Home = ({ navigation }) => {
       // <View style={styles.item}>
       <View
         className="m-1 rounded overflow-hidden "
-        style={{
+        style={[  {
           height: height * 0.25,
           width: width * 0.6,
           justifyContent: "center",
