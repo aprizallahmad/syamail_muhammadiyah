@@ -22,6 +22,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import errorHandler from "../helpers/errHandler"; 
 import { useRoute } from "@react-navigation/native";
 import { useFetchBooksId } from "../customeHooks/useFetchBooksId";
+import { styles } from "../assets/css/Style";
 let dataBooksStorage = "";
 
 export default Kitab = ({ navigation }) => {
@@ -128,7 +129,7 @@ export default Kitab = ({ navigation }) => {
 
   const renderBookItem = ({ item }) => {
     return (
-      <View className="m-1 rounded overflow-hidden">
+      <View className="m-1 rounded overflow-hidden mx-4" style={styles.containerDefault}>
         <TouchableOpacity
           className="m-4 bg"
           onPress={() => {

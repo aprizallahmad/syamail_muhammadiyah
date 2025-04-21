@@ -51,13 +51,14 @@ export const styles = {
   },
   pagination: {
     flexDirection: "row",
-    justifyContent: "center", 
+    justifyContent: "center",
+    marginBottom : 8,
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    marginHorizontal: 2, 
+    marginHorizontal: 2,
   },
   activeDot: {
     backgroundColor: Color.black500,

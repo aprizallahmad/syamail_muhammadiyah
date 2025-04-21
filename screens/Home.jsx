@@ -45,7 +45,6 @@ export default Home = ({ navigation }) => {
 
   let dataWithMore = [];
 
-
   if (isLoadingListBooks == false) {
     // functionLog(
     //   "dari home",
@@ -64,7 +63,7 @@ export default Home = ({ navigation }) => {
   const _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity onPress={() => handleCarouselClick(item, index)}>
-        <View style={styless.shadowWrapper} >
+        <View style={styless.shadowWrapper}>
           <ImageBackground
             source={item.image}
             style={styless.imageBackground}
@@ -73,7 +72,7 @@ export default Home = ({ navigation }) => {
             <Image
               source={item.image}
               style={styless.image}
-              resizeMode="cover"
+              resizeMode="contain"
             />
           </ImageBackground>
         </View>
@@ -95,19 +94,22 @@ export default Home = ({ navigation }) => {
       >
         <TouchableOpacity
           onPress={() => handleMenuItemClick(item, index)}
-          style={[styless.imageBackground,  {
-            width: width * 0.3,
-            height: width * 0.3,
-            // backgroundColor: isLainnya ? Color.white : Color.red,
-            borderRadius: 12,
-            alignItems: "center",
-            justifyContent: "center",
-          }]}
+          style={[
+            styless.imageBackground,
+            {
+              width: width * 0.3,
+              height: width * 0.3,
+              // backgroundColor: isLainnya ? Color.white : Color.red,
+              borderRadius: 12,
+              alignItems: "center",
+              justifyContent: "center",
+            },
+          ]}
         >
           {item.nama_kitab_indonesia === "Kitab lainnya" ? (
             <ArrowRight
-              width={width * 0.3}
-              height={width * 0.3}
+              width="30%"
+              height={width * 0.34}
               backgroundColor={Color.white}
               style={{
                 height: width * 0.3,
@@ -117,16 +119,50 @@ export default Home = ({ navigation }) => {
           ) : (
             <Image
               source={{ uri: item.url_gambar_kitab }}
-              style={[styless.image ,{ height: width * 0.4 , width: width * 0.3 }]}
+              style={[styless.image]}
             />
           )}
-          <Text className="  font-medium text-center ">
-            {item.nama_kitab_indonesia}
-          </Text>
         </TouchableOpacity>
+        <Text className="font-medium text-center h-12">
+          {item.nama_kitab_indonesia}
+        </Text>
       </View>
     );
   };
+
+  const renderStoreItem = ({ item }) => (
+    <View
+      className="m-1 rounded overflow-hidden "
+      style={{
+        height: height * 0.25,
+        width: width * 0.3,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <TouchableOpacity
+        style={[
+          styless.imageBackground,
+          {
+            width: width * 0.3,
+            height: width * 0.3,
+            // backgroundColor: isLainnya ? Color.white : Color.red,
+            borderRadius: 12,
+            alignItems: "center",
+            justifyContent: "center",
+          },
+        ]}
+        onPress={() => handleStoreClick(item)}
+      >
+        <Image
+          source={{ uri: item.logo_toko }}
+          style={[styless.image]}
+          resizeMode="cover"
+        />
+      </TouchableOpacity>
+      <Text className="  font-medium text-center h-12">{item.nama_toko}</Text>
+    </View>
+  );
 
   const renderChannels = ({ item, index }) => {
     return (
@@ -135,29 +171,32 @@ export default Home = ({ navigation }) => {
         className="m-1 rounded overflow-hidden "
         style={{
           height: height * 0.25,
-          width: width * 0.3,
+          width: width * 0.6,
           justifyContent: "center",
           alignItems: "center",
+          alignContent: "center",
+          marginBottom: "5%",
         }}
       >
         <TouchableOpacity
           onPress={() => handleStoreClick(item, index)}
-          style={{
-            width: width * 0.3,
-            height: width * 0.3,
-            // backgroundColor: isLainnya ? Color.white : Color.red,
-            borderRadius: 12,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          style={[
+            styless.imageBackground,
+            {
+              width: "100%",
+              height: width * 0.3,
+              borderRadius: 12,
+              justifyContent: "center",
+            },
+          ]}
         >
           <Image
             source={{ uri: item.logo_toko }}
-            style={{ height: width * 0.3, width: width * 0.3 }}
+            style={[styless.image]}
+            resizeMode="cover"
           />
-
-          <Text className="  font-medium text-center ">{item.nama_toko}</Text>
         </TouchableOpacity>
+        <Text className="  font-medium text-center h-12">{item.nama_toko}</Text>
       </View>
     );
   };
@@ -195,136 +234,152 @@ export default Home = ({ navigation }) => {
     Linking.openURL(url);
   };
 
-  const renderStoreItem = ({ item }) => (
-    <View
-      className="m-1 rounded overflow-hidden  items-center "
-      style={{ height: width * 0.4, width: width * 0.35 }}
-    >
-      <TouchableOpacity onPress={() => handleStoreClick(item)}>
-        <Image
-          source={{ uri: item.logo_toko }}
-          style={{ height: width * 0.3, width: width * 0.3 }}
-          resizeMode="contain"
-        />
-        <Text className="  font-medium text-gray-700  text-center">
-          {item.nama_toko}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-
   return (
-    <SpecifiedView className="" style={{ paddingHorizontal: 16, marginTop: 16, }}>
-      <View style={styles.containerDefault}>
-        <Text>Assalaamu'alaikum </Text>
+    <View style={{ flex: 1 }}>
+      {/* Sticky Header */}
+      <View style={{ zIndex: 1, paddingTop: 38, paddingHorizontal: 16, marginBottom : 4 }}>
+        <Text className="">Assalaamu'alaikum </Text>
       </View>
-      <View style={styles.containerDefault}>
-        <Carousel
-          loop={true}
-          width={width - 45}
-          height={250}
-          autoPlay={true}
-          data={dataCarousel}
-          scrollAnimationDuration={3000}
-          onSnapToItem={setActiveIndex}
-          renderItem={_renderItem}
-          mode="parallax"
-          modeConfig={{ parallaxScrollingOffset: 20 }}
-          panGestureHandlerProps={{
-            activeOffsetX: [-10, 10],
-          }}
-        />
-        <View className="" style={styles.pagination}>
-          {dataCarousel.map((_, index) => (
+
+      {/* Scrollable content */}
+      <SpecifiedView
+        className=""
+        style={{ paddingHorizontal: 16, marginTop: 6 }}
+      >
+        {/* <View style={styles.containerDefault}>
+          <View className="flex-row gap-1 flex-wrap">
             <View
-              key={index}
-              style={[
-                styles.dot,
-                index === activeIndex ? styles.activeDot : styles.inactiveDot,
-              ]}
+              style={{ width: "40%", flex: 1 }}
+            >
+              <Text>Jum'at, 20 syawal, 1446 H</Text>
+              <View className="flex-row gap-2">
+                <View className="flex-col gap-1">
+                  <Text>Subuh</Text>
+                  <Text>04:37</Text>
+                </View>
+                <View className="flex-col gap-1">
+                  <Text>Terbit</Text>
+                  <Text>05:52</Text>
+                </View>
+                <View className="flex-col gap-1">
+                  <Text>Lohor</Text>
+                  <Text>11:55</Text>
+                </View>
+              </View>
+              <Text>Bekasi, Jati Asih</Text>
+            </View>
+            <View className="flex-1 p-3 justify-center items-center">
+              <Image
+                style={{
+                  width : '100%', 
+                  height: 80,
+                }}
+                source={require("../assets/png/logo_dht_1.png")}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
+        </View> */}
+        <View style={styless.carousel}>
+          <Carousel
+            loop={true}
+            width={width - 32}
+            height={200}
+            autoPlay={true}
+            data={dataCarousel}
+            scrollAnimationDuration={3000}
+            onSnapToItem={setActiveIndex}
+            renderItem={_renderItem}
+            mode="parallax"
+            modeConfig={{ parallaxScrollingOffset: 20 }}
+            panGestureHandlerProps={{
+              activeOffsetX: [-10, 10],
+            }}
+          />
+          <View className="" style={styles.pagination}>
+            {dataCarousel.map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.dot,
+                  index === activeIndex ? styles.activeDot : styles.inactiveDot,
+                ]}
+              />
+            ))}
+          </View>
+        </View>
+        <View style={styles.containerDefault}>
+          <Text className="">Menu Kitab Kuning</Text>
+          <View className="flex flex-row flex-wrap">
+            <FlatList
+              data={dataWithMore}
+              horizontal={true}
+              nestedScrollEnabled={true}
+              renderItem={ItemGridMenu}
+              keyExtractor={(kitabKuning, index) =>
+                `${kitabKuning.id}-${index}`
+              }
             />
-          ))}
+          </View>
         </View>
-      </View>
-      <View style={styles.containerDefault}>
-        <Text className="">Menu Kitab Kuning</Text>
-        <View className="flex flex-row flex-wrap">
-          <FlatList
-            data={dataWithMore}
-            horizontal={true}
-            nestedScrollEnabled={true}
-            renderItem={ItemGridMenu}
-            keyExtractor={(kitabKuning, index) =>
-              `${kitabKuning.id}-${index}`
-            }
-          />
+        <View style={styles.containerDefault}>
+          <Text className="ml-3">List Channel Youtube</Text>
+          <View className="flex flex-row flex-wrap">
+            <FlatList
+              data={channels.ChannelYoutube}
+              horizontal={true}
+              nestedScrollEnabled={true}
+              renderItem={renderChannels}
+              keyExtractor={(channels, index) => `${channels.id_toko}-${index}`}
+            />
+          </View>
         </View>
-      </View>
-      <View style={styles.containerDefault}>
-        <Text className="ml-3">List Channel Youtube</Text>
-        <View className="flex flex-row flex-wrap">
-          <FlatList
-            data={channels.ChannelYoutube}
-            horizontal={true}
-            nestedScrollEnabled={true}
-            renderItem={renderChannels}
-            keyExtractor={(channels, index) => `${channels.id_toko}-${index}`}
-          />
+        <View style={styles.containerDefault}>
+          <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
+          <View className="flex flex-row flex-wrap">
+            <FlatList
+              data={stores.toko_mitra}
+              horizontal={true}
+              renderItem={renderStoreItem}
+              nestedScrollEnabled={true}
+              keyExtractor={(toko_mitra, index) =>
+                `${toko_mitra.id_toko}-${index}`
+              }
+            />
+          </View>
         </View>
-      </View>
-      <View className="bg-[#1eb019] h-8 justify-center">
-        <Text> Belilah Buku Aslinya di Mitra Toko Kitab Kuning</Text>
-      </View>
-      <View className="flex flex-row flex-wrap">
-        <FlatList
-          data={stores.toko_mitra}
-          horizontal={true}
-          renderItem={renderStoreItem}
-          nestedScrollEnabled={true}
-          keyExtractor={(toko_mitra, index) =>
-            `${toko_mitra.id_toko}-${index}`
-          }
-        />
-      </View>
-      <View className="bg-[#1eb019] h-8 justify-center mb-20">
-        <Text> Ngaji Kitab Syamail Muhammadiyah</Text>
-      </View>
-    </SpecifiedView>
+      </SpecifiedView>
+    </View>
   );
 };
 
-
 const styless = StyleSheet.create({
   shadowWrapper: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     borderRadius: 8,
-    backgroundColor: '#fff', // penting untuk iOS shadow
-    shadowColor: '#000',
+    backgroundColor: "#fff", // penting untuk iOS shadow
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5, // Android shadow
-    marginBottom: 8,
   },
   imageBackground: {
     flex: 1,
     borderRadius: 8,
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden', // biar radius-nya jalan
+    width: "100%",
+    height: "100%",
+    overflow: "hidden", // biar radius-nya jalan
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     borderRadius: 8,
   },
   carousel: {
+    boxShadow: "0px 0px 14px 1px rgba(140, 140, 140, 0.20)",
+    borderRadius: 16,
     marginBottom: 5,
-    borderBottomStartRadius: 16,
-    borderBottomEndRadius: 16,
-    boxShadow: '0px 0px 14px 1px rgba(140, 140, 140, 0.20)',
-    paddingVertical: 8,
-  }
-
+  },
 });

@@ -1,23 +1,23 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import { Button, Text, TouchableOpacity, View } from "react-native";
+import { Button, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import TabArr, { StackArr } from "./data/DataTabBottomNav";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Animatable from "react-native-animatable";
 import Icon from "./components/Icons";
 import Color from "./assets/color/Color";
-import { SafeAreaView, StyleSheet } from "react-native";
 import { styles } from "./assets/css/Style";
 import Kitab from "./screens/Kitab"; 
+import { SpecifiedView } from "./components/SpecifiedView";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default Index = () => {
   const TabButton = (props) => {
-    const { item, onPress, accessibilityState } = props;
+    const { item, onPress, accessibilityState } = props; 
     const focused = accessibilityState.selected;
     const viewRef = useRef(null);
 
@@ -55,6 +55,7 @@ export default Index = () => {
   return (
     <NavigationContainer> 
       <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']} >
+        <StatusBar backgroundColor={Color.white}/>
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
@@ -94,4 +95,3 @@ export default Index = () => {
     </NavigationContainer>
   );
 };
-

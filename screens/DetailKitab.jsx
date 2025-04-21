@@ -28,7 +28,7 @@ export const DetailKitab = ({ route }) => {
   };
 
   return (
-    <View>
+    <SpecifiedView>
       <View>
         <Button
           title="favorite"
@@ -45,6 +45,6 @@ export const DetailKitab = ({ route }) => {
       <View>
         <HTML source={{ html: objData.params?.isi_arab }} />
       </View>
-    </View>
+    </SpecifiedView>
   );
 };

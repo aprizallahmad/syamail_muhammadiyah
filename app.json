@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "syamailMuhammadiyah",
-    "slug": "syamailMuhammadiyah",
+    "name": "Markaz Kitab",
+    "slug": "Markaz Kitab",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,14 +16,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aprizallahmad.markazullughoh",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.aprizallahmad.syamailMuhammadiyah"
+      "package": "com.aprizallahmad.markazullughoh"
     },
     "web": {
       "favicon": "./assets/favicon.png"
