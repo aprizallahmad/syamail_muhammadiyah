@@ -21,7 +21,7 @@ export const TabArr = [
     type: Icons.MaterialCommunityIcons,
     activeIcon: "heart-plus",
     inActiveIcon: "heart-plus-outline",
-    component: Settings,
+    component: Favorite,
   },
   {
     route: "Search",
