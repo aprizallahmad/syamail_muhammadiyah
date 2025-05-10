@@ -19,7 +19,7 @@ import Modal, {
 } from "react-native-modals";
 import { BOOK_SET } from "../store/actions/actionType";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import errorHandler from "../helpers/errHandler"; 
+import errorHandler from "../helpers/errHandler";
 import { useRoute } from "@react-navigation/native";
 import { useFetchBooksId } from "../customeHooks/useFetchBooksId";
 import { styles } from "../assets/css/Style";
@@ -129,20 +129,18 @@ export default Kitab = ({ navigation }) => {
 
   const renderBookItem = ({ item }) => {
     return (
-      <View className="m-1 rounded overflow-hidden mx-4" style={styles.containerDefault}>
-        <TouchableOpacity
-          className="m-4 bg"
-          onPress={() => {
-            handleClickDetail(item.id);
-            setVisible(false);
-          }}
-        >
+      <TouchableOpacity onPress={() => {
+        handleClickDetail(item.id);
+        setVisible(false);
+      }}
+        className="m-1 rounded overflow-hidden mx-4" style={styles.containerDefault}>
+        <View className="m-4 bg" >
           <Text> {item.judul_arab} </Text>
           <Text>
             {item.id}. {item.judul_indonesia}
           </Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -158,41 +156,41 @@ export default Kitab = ({ navigation }) => {
     }
   };
 
-  return ( 
-      <SpecifiedView className="flex-1">
-        {visible ? (
-          <View>
-            <Modal
-              visible={visible}
-              onTouchOutside={() => navigation.navigate("Home")}
-              footer={moodalFooter()}
-            >
-              <ModalContent>
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "white",
-                    borderBottomWidth: 1,
-                    paddingBottom: 6,
-                    borderBottomColor: "#D1D1D1",
-                  }}
-                >
-                  <Text className=" text-slate-600"> Alert </Text>
-                </View>
-                <View className="mt-2 justify-center items-center">
-                  <Text className="text-center text-slate-600">
-                    {textContent}
-                  </Text>
-                </View>
-              </ModalContent>
-            </Modal>
-          </View>
-        ) : (
-          <View>
-            <FlatList data={booksStorage} renderItem={renderBookItem} />
-          </View>
-        )}
-      </SpecifiedView> 
+  return (
+    <SpecifiedView className="flex-1">
+      {visible ? (
+        <View>
+          <Modal
+            visible={visible}
+            onTouchOutside={() => navigation.navigate("Home")}
+            footer={moodalFooter()}
+          >
+            <ModalContent>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  borderBottomWidth: 1,
+                  paddingBottom: 6,
+                  borderBottomColor: "#D1D1D1",
+                }}
+              >
+                <Text className=" text-slate-600"> Alert </Text>
+              </View>
+              <View className="mt-2 justify-center items-center">
+                <Text className="text-center text-slate-600">
+                  {textContent}
+                </Text>
+              </View>
+            </ModalContent>
+          </Modal>
+        </View>
+      ) : (
+        <View>
+          <FlatList data={booksStorage} renderItem={renderBookItem} />
+        </View>
+      )}
+    </SpecifiedView>
   );
 };
