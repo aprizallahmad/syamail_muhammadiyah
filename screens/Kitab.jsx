@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import Text from "../components/Text";
-
+import { Icons } from "../components/Icons";
 import { functionLog } from "../helpers/functionHelper";
 import { useFetchBook } from "../customeHooks/useFetchBook";
 import { SpecifiedView } from "../components/SpecifiedView";
@@ -100,9 +100,23 @@ export default Kitab = ({ navigation }) => {
       functionLog("error dari fetchBookAction", err);
     }
   };
+  const handlePress = () => {
+    functionLog("masuk else messageModal", messageModal);
+    if (messageModal === "Done") {
+      setVisible(false);
+      setBooksStorage(dataBooksStorage);
+    } else if (messageModal === "Error..!") {
+      setBooksStorage(booksID[table_name]);
+      setVisible(false);
+    } else {
+      functionLog("masuk else messageModal", messageModal);
+      fetchBookAction();
+    }
+  };
 
   const moodalFooter = () => {
     const handlePress = () => {
+      functionLog("masuk else messageModal", messageModal);
       if (messageModal === "Done") {
         setVisible(false);
         setBooksStorage(dataBooksStorage);
@@ -116,11 +130,30 @@ export default Kitab = ({ navigation }) => {
     };
 
     return (
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
-          <Text style={styles.buttonText}>{messageModal}</Text>
-        </TouchableOpacity>
+      <View style={styles.modalContent}>
+        <View style={styles.header}>
+          <Icons.Ionicons
+            name="information-circle-outline"
+            size={24}
+            color="#555"
+          />
+          <Text style={styles.title}>Download Data Kitab</Text>
+        </View>
+        <Text style={styles.message}>
+          {messageModal}
+        </Text>
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={handlePress}>
+            <Text style={styles.confirmText}>YA</Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
+      // <View style={styles.footer}>
+      //   <TouchableOpacity style={styles.button} onPress={handlePress}>
+      //     <Text style={styles.buttonText}>{messageModal}</Text>
+      //   </TouchableOpacity>
+      // </View>
     );
   };
 
@@ -158,10 +191,24 @@ export default Kitab = ({ navigation }) => {
       {visible ? (
         <View>
           <Modal isVisible={visible}
-          onTouchOutside={()=>navigation.navigate("Home")}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalText}>{textContent}</Text>
-              {moodalFooter()}
+            onTouchOutside={() => navigation.navigate("Home")}>
+            <View style={styles.modalContent}>
+              <View style={styles.header}>
+                <Icons.Ionicons
+                  name="information-circle-outline"
+                  size={24}
+                  color="#555"
+                />
+                <Text style={styles.title}>Download Data Kitab</Text>
+              </View>
+              <Text style={styles.message}>
+                {textContent}
+              </Text>
+              <View style={styles.footer}>
+                <TouchableOpacity onPress={handlePress} >
+                  <Text style={styles.confirmText}>YA</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </Modal>
         </View>

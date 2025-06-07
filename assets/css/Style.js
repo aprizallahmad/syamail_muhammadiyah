@@ -127,26 +127,34 @@ export const styles = {
     alignItems: 'center',
     height: 60,
   }, 
-  modalContainer: {
+  modalContent: {
     backgroundColor: 'white',
-    padding: 20,
     borderRadius: 10,
+    padding: 20,
   },
-  modalText: {
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  title: {
+    marginLeft: 10,
+    fontWeight: 'bold',
     fontSize: 16,
-    marginBottom: 20,
+    color: '#333',
+  },
+  message: {
+    fontSize: 14,
+    color: '#555',
+    lineHeight: 20,
   },
   footer: {
+    marginTop: 20,
     alignItems: 'flex-end',
   },
-  button: {
-    backgroundColor: '#2196F3',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 6,
-  },
-  buttonText: {
-    color: 'white',
+  confirmText: {
+    fontSize: 14,
+    color: '#1a2a3a',
     fontWeight: 'bold',
   },
 };
