@@ -11,7 +11,7 @@ export default HomeStack = (() => {
     return (
         <Stack.Navigator
         screenOptions={{headerShown : false}}>
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="HomeScreen" component={Home} />
             <Stack.Screen name="Kitab" component={Kitab} />
             <Stack.Screen name="Detail" component={DetailKitab} /> 
             <Stack.Screen name="More Kitab" component={MoreKitab}/>

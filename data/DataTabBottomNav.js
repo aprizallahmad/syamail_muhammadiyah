@@ -1,14 +1,11 @@
 import { Icons } from "../components/Icons";
-import Home from "../screens/Home";
 import { Favorite } from "../screens/Favorite";
 import Settings from "../screens/Settings";
-import Kitab from "../screens/Kitab";
-import { DetailKitab } from "../screens/DetailKitab";
 import HomeStack from "../screens/stack/HomeStack";
 
 export const TabArr = [
   {
-    route: "Home",
+    route: "HomeTab",
     label: "Home",
     type: Icons.Ionicons,
     activeIcon: "grid",

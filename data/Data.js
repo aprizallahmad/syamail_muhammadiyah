@@ -1,10 +1,6 @@
 import { Dimensions, Image, View } from "react-native";
 import IMAGES from "../assets/banner";
 import Text from "../components/Text";
-import { Icons } from "../components/Icons";
-import Home from "../screens/Home";
-import { Favorite } from "../screens/Favorite";
-import { LastDetail } from "../screens/LastDetail";
 
 export const width = Dimensions.get("window").width;
 export const height = Dimensions.get("window").height;
