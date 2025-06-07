@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import {
-  Dimensions,
   FlatList,
   Image,
   ImageBackground,
@@ -24,6 +23,7 @@ import { useFetchStore } from "../customeHooks/useFetchStore";
 import { useFetchListBooks } from "../customeHooks/useFetchListBooks";
 import { SpecifiedView } from "../components/SpecifiedView";
 import { Loader } from "../components/Loader";
+import { useIsFocused } from "@react-navigation/native";
 
 import ArrowRight from "../assets/svg/ic_more.svg"; // ← Import SVG
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -32,10 +32,9 @@ import Color from "../assets/color/Color";
 import { useFetchChannelYoutube } from "../customeHooks/useFetchChannelYoutube";
 
 const TAG = "dari HOME";
-const { width, height } = Dimensions.get("window");
-functionLog("ini width handphonya", width);
 
 export default Home = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const { width, height } = useWindowDimensions();
   functionLog("ini width handphonya", width);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -285,7 +284,7 @@ export default Home = ({ navigation }) => {
         </View> */}
         <View style={styless.carousel}>
           <Carousel
-            loop={true}
+            loop={isFocused}
             width={width - 32}
             height={200}
             autoPlay={true}
