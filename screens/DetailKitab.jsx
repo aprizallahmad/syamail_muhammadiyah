@@ -4,7 +4,7 @@ import { functionLog } from "../helpers/functionHelper";
 import { SpecifiedView } from "../components/SpecifiedView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import errorHandler from "../helpers/errHandler";
-import Text from "../components/Text" 
+import Text from "../components/Text"
 import { styles } from "../assets/css/Style";
 
 
@@ -30,25 +30,27 @@ export const DetailKitab = ({ route }) => {
   };
 
   return (
-    <SpecifiedView className="flex-1">
-      <View style={[styles.containerDefault, {marginHorizontal : 8}]}> 
-        <View>
-          <Button
-            title="favorite"
-            onPress={() => {
-              handleFavorite(objData.params)
-            }}
-          />
+    <ScrollView>
+      <SpecifiedView className="flex-1">
+        <View style={[styles.containerDefault, { marginHorizontal: 8 }]}>
+          <View>
+            <Button
+              title="favorite"
+              onPress={() => {
+                handleFavorite(objData.params)
+              }}
+            />
+          </View>
+          <View>
+            <Text>
+              {objData.params?.id}. {objData.params?.judul_indonesia}
+            </Text>
+          </View>
+          <View>
+            <HTML source={{ html: objData.params?.isi_arab }} />
+          </View>
         </View>
-        <View>
-          <Text>
-            {objData.params?.id}. {objData.params?.judul_indonesia}
-          </Text>
-        </View>
-        <View>
-          <HTML source={{ html: objData.params?.isi_arab }} />
-        </View>
-      </View> 
-    </SpecifiedView>
+      </SpecifiedView>
+    </ScrollView>
   );
 }; 
