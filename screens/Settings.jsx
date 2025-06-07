@@ -22,15 +22,14 @@ export default Settings = () => {
   const snapPoints = useMemo(() => ["25%", "50%"], []);
 
   return (
-    <SpecifiedView>
-      <ScrollView className="flex-1 bg-white">
+    <SpecifiedView className="flex-1 bg-white"> 
         {/* Header */}
         <View className="flex-row items-center px-4 py-3 border-b border-gray-200">
           <Text className="text-lg font-semibold ml-4">Profil</Text>
         </View>
 
         {/* Profile Info */}
-        <View className="items-center mt-6">
+        <View className="items-center mt-6 bg-slate-600">
           <Image
             source={{ uri: 'https://i.imgur.com/1Q9Z1Zm.jpg' }} // ganti dengan foto profil
             className="w-24 h-24 rounded-full"
@@ -48,7 +47,7 @@ export default Settings = () => {
         </View>
 
         {/* Semangat & Doa */}
-        <View className="bg-red-700 flex-row justify-around py-3 mt-6 rounded-t-xl">
+        <View className="left-0 right-0 z-50 mt-[-10] bg-red-700 flex-row justify-around py-3 rounded-t-xl">
           <View className="items-center">
             <View className="flex-row items-center">
               <View className="w-2 h-2 rounded-full bg-yellow-400 mr-1" />
@@ -74,8 +73,7 @@ export default Settings = () => {
           <View icon={<FontAwesome5 name="coins" size={24} color="black" />} label="Poin Saya" />
           <View icon={<MaterialIcons name="attach-money" size={24} color="black" />} label="Aktivitas Infaq" />
           <View icon={<MaterialIcons name="volunteer-activism" size={24} color="black" />} label="Aktivitas Doa" />
-        </View>
-      </ScrollView>
+        </View> 
 
 
     </SpecifiedView>

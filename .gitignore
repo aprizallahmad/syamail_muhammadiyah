@@ -34,3 +34,6 @@ yarn.lock
 
 # typescript
 *.tsbuildinfo
+
+# idea file
+*.idea
