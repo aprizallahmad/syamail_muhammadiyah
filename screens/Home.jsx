@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Alert,
   Animated,
+  useWindowDimensions
 } from "react-native";
 import Text from "../components/Text";
 
@@ -35,6 +36,8 @@ const { width, height } = Dimensions.get("window");
 functionLog("ini width handphonya", width);
 
 export default Home = ({ navigation }) => {
+  const { width, height } = useWindowDimensions();
+  functionLog("ini width handphonya", width);
   const [activeIndex, setActiveIndex] = useState(0);
   const [{ stores, isLoadingStore, error }] = useFetchStore();
   const [{ listBooks, isLoadingListBooks, errorListBooks }] =
@@ -235,7 +238,7 @@ export default Home = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
       {/* Sticky Header */}
       <View style={{ zIndex: 1, paddingTop: 38, paddingHorizontal: 16, marginBottom : 4 }}>
         <Text className="">Assalaamu'alaikum </Text>
@@ -349,7 +352,7 @@ export default Home = ({ navigation }) => {
           </View>
         </View>
       </SpecifiedView>
-    </View>
+    </ScrollView>
   );
 };
 

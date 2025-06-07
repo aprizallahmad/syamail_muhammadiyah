@@ -9,7 +9,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 export const SpecifiedView = ({ children, style }) => {
   const { colors } = useTheme();
   return Platform.OS === "ios" ? ( 
-      <ScrollView>
+      
         <View
           style={[
             { flex: 1, backgroundColor: colors.background, marginTop: 16 , zIndex : 2, },
@@ -18,9 +18,9 @@ export const SpecifiedView = ({ children, style }) => {
         >
           {children}
         </View>
-      </ScrollView> 
+      
   ) : ( 
-      <ScrollView>
+     
         <View
           style={[
             { flex: 1, backgroundColor: colors.background, marginTop: 46 , marginBottom : 80 , zIndex : 2 },
@@ -29,7 +29,6 @@ export const SpecifiedView = ({ children, style }) => {
         >
           {children}
         </View>
-      </ScrollView> 
   );
 };
  
