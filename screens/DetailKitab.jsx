@@ -30,8 +30,9 @@ export const DetailKitab = ({ route }) => {
   };
 
   return (
-    <ScrollView>
-      <SpecifiedView className="flex-1">
+
+    <SpecifiedView className="flex-1">
+      <ScrollView className="flex-1">
         <View style={[styles.containerDefault, { marginHorizontal: 8 }]}>
           <View>
             <Button
@@ -50,7 +51,7 @@ export const DetailKitab = ({ route }) => {
             <HTML source={{ html: objData.params?.isi_arab }} />
           </View>
         </View>
-      </SpecifiedView>
-    </ScrollView>
+      </ScrollView>
+    </SpecifiedView>
   );
 }; 

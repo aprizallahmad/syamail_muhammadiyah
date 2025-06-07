@@ -18,7 +18,7 @@ import Text from "../components/Text";
 import Carousel from "react-native-reanimated-carousel";
 import { dataCarousel, itemData } from "../data/Data";
 import { styles } from "../assets/css/Style";
-import { functionBack, functionLog } from "../helpers/functionHelper";
+import { functionLog } from "../helpers/functionHelper";
 import { useFetchStore } from "../customeHooks/useFetchStore";
 import { useFetchListBooks } from "../customeHooks/useFetchListBooks";
 import { SpecifiedView } from "../components/SpecifiedView";

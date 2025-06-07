@@ -126,5 +126,27 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,
-  }
+  }, 
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  footer: {
+    alignItems: 'flex-end',
+  },
+  button: {
+    backgroundColor: '#2196F3',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 };

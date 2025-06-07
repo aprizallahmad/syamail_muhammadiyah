@@ -3,7 +3,6 @@ import { LogBox } from "react-native";
 import Index from "./Index";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import { ModalPortal } from "react-native-modals";
 import { Provider as PaperProvider, DefaultTheme, useTheme  } from 'react-native-paper';
 import Color from "./assets/color/Color";
 
@@ -35,7 +34,6 @@ export default function App() {
     <Provider store={store}>
       <PaperProvider theme={theme}>
         <Index />
-        <ModalPortal />
       </PaperProvider>
     </Provider>
   );

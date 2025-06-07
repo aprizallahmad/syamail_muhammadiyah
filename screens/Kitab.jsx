@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import Text from "../components/Text";
 
-import { functionBack, functionLog } from "../helpers/functionHelper";
+import { functionLog } from "../helpers/functionHelper";
 import { useFetchBook } from "../customeHooks/useFetchBook";
 import { SpecifiedView } from "../components/SpecifiedView";
 import { Loader } from "../components/Loader";
@@ -11,12 +11,8 @@ import {
   ORIGIN,
   urlFetchBook,
 } from "../store/actions/actionCreator";
-import { DialogPopUp } from "../components/DialogPopUp";
-import Modal, {
-  ModalButton,
-  ModalContent,
-  ModalFooter,
-} from "react-native-modals";
+import Modal from 'react-native-modal';
+
 import { BOOK_SET } from "../store/actions/actionType";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import errorHandler from "../helpers/errHandler";
@@ -106,24 +102,25 @@ export default Kitab = ({ navigation }) => {
   };
 
   const moodalFooter = () => {
+    const handlePress = () => {
+      if (messageModal === "Done") {
+        setVisible(false);
+        setBooksStorage(dataBooksStorage);
+      } else if (messageModal === "Error..!") {
+        setBooksStorage(booksID[table_name]);
+        setVisible(false);
+      } else {
+        functionLog("masuk else messageModal", messageModal);
+        fetchBookAction();
+      }
+    };
+
     return (
-      <ModalFooter>
-        <ModalButton
-          text={messageModal}
-          onPress={() => {
-            if (messageModal == "Done") {
-              setVisible(false);
-              setBooksStorage(dataBooksStorage);
-            } else if (messageModal == "Error..!") {
-              setBooksStorage(booksID[table_name]);
-              setVisible(false);
-            } else {
-              functionLog("masuk else messageModal", messageModal);
-              fetchBookAction();
-            }
-          }}
-        />
-      </ModalFooter>
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.button} onPress={handlePress}>
+          <Text style={styles.buttonText}>{messageModal}</Text>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -160,30 +157,12 @@ export default Kitab = ({ navigation }) => {
     <SpecifiedView className="flex-1">
       {visible ? (
         <View>
-          <Modal
-            visible={visible}
-            onTouchOutside={() => navigation.navigate("Home")}
-            footer={moodalFooter()}
-          >
-            <ModalContent>
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "white",
-                  borderBottomWidth: 1,
-                  paddingBottom: 6,
-                  borderBottomColor: "#D1D1D1",
-                }}
-              >
-                <Text className=" text-slate-600"> Alert </Text>
-              </View>
-              <View className="mt-2 justify-center items-center">
-                <Text className="text-center text-slate-600">
-                  {textContent}
-                </Text>
-              </View>
-            </ModalContent>
+          <Modal isVisible={visible}
+          onTouchOutside={()=>navigation.navigate("Home")}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalText}>{textContent}</Text>
+              {moodalFooter()}
+            </View>
           </Modal>
         </View>
       ) : (
