@@ -42,7 +42,7 @@ export const DetailKitab = ({ route }) => {
 
     <SpecifiedView className="flex-1">
       <ScrollView className="flex-1">
-        <View style={[styles.containerDefault, { marginHorizontal: 8 }]}>
+        <View style={{ marginHorizontal: 8 }}>
           <View className='mb-4'>
             <Button
               title="favorite"
