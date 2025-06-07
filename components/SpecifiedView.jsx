@@ -9,10 +9,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 export const SpecifiedView = ({ children, style }) => {
   const { colors } = useTheme();
   return Platform.OS === "ios" ? ( 
-      
         <View
           style={[
-            { flex: 1, backgroundColor: colors.background, marginTop: 16 , zIndex : 2, },
+            { flex: 1, backgroundColor: colors.background, marginTop: 16 , marginBottom : 60 , zIndex : 2, },
             style,
           ]}
         >
@@ -23,7 +22,7 @@ export const SpecifiedView = ({ children, style }) => {
      
         <View
           style={[
-            { flex: 1, backgroundColor: colors.background, marginTop: 46 , marginBottom : 80 , zIndex : 2 },
+            { flex: 1, backgroundColor: colors.background, marginTop: 46 , marginBottom : 60 , zIndex : 2 },
             style,
           ]}
         >
