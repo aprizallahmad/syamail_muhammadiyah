@@ -1,4 +1,4 @@
-import { Platform, View, ScrollView } from "react-native";
+import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Color from "../assets/color/Color";
 import { StatusBar } from "expo-status-bar";
@@ -9,25 +9,25 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 export const SpecifiedView = ({ children, style }) => {
   const { colors } = useTheme();
   return Platform.OS === "ios" ? ( 
-        <View
+        <SafeAreaView
           style={[
-            { flex: 1, backgroundColor: colors.background, marginTop: 16 , marginBottom : 60 , zIndex : 2, },
+            { flex: 1, backgroundColor: colors.background, zIndex : 2, },
             style,
           ]}
         >
           {children}
-        </View>
+        </SafeAreaView>
       
   ) : ( 
      
-        <View
+        <SafeAreaView
           style={[
-            { flex: 1, backgroundColor: colors.background, marginTop: 46 , marginBottom : 60 , zIndex : 2 },
+            { flex: 1, backgroundColor: colors.background, zIndex : 2 },
             style,
           ]}
         >
           {children}
-        </View>
+        </SafeAreaView>
   );
 };
  

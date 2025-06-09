@@ -54,7 +54,6 @@ export default Index = () => {
 
   return (
     <NavigationContainer> 
-      <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']} >
         <StatusBar backgroundColor={Color.white}/>
         <Tab.Navigator
           screenOptions={{
@@ -91,7 +90,6 @@ export default Index = () => {
             );
           })}
         </Tab.Navigator>
-      </SafeAreaView>
     </NavigationContainer>
   );
 };
