@@ -9,7 +9,7 @@ export const useFetchPromo = () => {
     const dispatcher = useDispatch();
     useEffect(() => {
         dispatcher(fetchPromosAction());
-    })
+    }, []);
 
-    return[promos.PromotionSlide]
+    return[promos]
 }

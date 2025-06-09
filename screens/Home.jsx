@@ -21,12 +21,12 @@ import { styles } from "../assets/css/Style";
 import { functionLog } from "../helpers/functionHelper";
 import { useFetchStore } from "../customeHooks/useFetchStore";
 import { useFetchListBooks } from "../customeHooks/useFetchListBooks";
+import { useFetchPromo } from "../customeHooks/useFetchPromo";
 import { SpecifiedView } from "../components/SpecifiedView";
 import { Loader } from "../components/Loader";
 import { useIsFocused } from "@react-navigation/native";
 
 import ArrowRight from "../assets/svg/ic_more.svg"; // ← Import SVG
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Color from "../assets/color/Color";
 import { useFetchChannelYoutube } from "../customeHooks/useFetchChannelYoutube";
@@ -44,9 +44,12 @@ export default Home = ({ navigation }) => {
 
   const [{ channels, isLoadingChannel, errorChannel }] =
     useFetchChannelYoutube();
-
+  const [{ promos, isLoadingPromo, errorPromo }] = useFetchPromo();
+  let filteredSlides = []
+  if (!isLoadingPromo){
+    filteredSlides = promos?.PromotionSlide.filter(item => item.status === 1);
+  }
   let dataWithMore = [];
-
   if (isLoadingListBooks == false) {
     // functionLog(
     //   "dari home",
@@ -67,12 +70,12 @@ export default Home = ({ navigation }) => {
       <TouchableOpacity onPress={() => handleCarouselClick(item, index)}>
         <View style={styless.shadowWrapper}>
           <ImageBackground
-            source={item.image}
+            source={{uri : item.src_img}}
             style={styless.imageBackground}
             resizeMode="cover" // atau "stretch" / "contain", tergantung kebutuhan
           >
             <Image
-              source={item.image}
+              source={{uri : item.src_img}}
               style={styless.image}
               resizeMode="contain"
             />
@@ -171,7 +174,7 @@ export default Home = ({ navigation }) => {
       // <View style={styles.item}>
       <View
         className="m-1 rounded overflow-hidden "
-        style={[  {
+        style={[{
           height: height * 0.25,
           width: width * 0.6,
           justifyContent: "center",
@@ -237,58 +240,20 @@ export default Home = ({ navigation }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      {/* Sticky Header */}
-      <View style={{ zIndex: 1, paddingTop: 38, paddingHorizontal: 16, marginBottom : 4 }}>
-        <Text className="">Assalaamu'alaikum </Text>
-      </View>
-
-      {/* Scrollable content */}
-      <SpecifiedView
-        className=""
-        style={{ paddingHorizontal: 16, marginTop: 6 }}
-      >
-        {/* <View style={styles.containerDefault}>
-          <View className="flex-row gap-1 flex-wrap">
-            <View
-              style={{ width: "40%", flex: 1 }}
-            >
-              <Text>Jum'at, 20 syawal, 1446 H</Text>
-              <View className="flex-row gap-2">
-                <View className="flex-col gap-1">
-                  <Text>Subuh</Text>
-                  <Text>04:37</Text>
-                </View>
-                <View className="flex-col gap-1">
-                  <Text>Terbit</Text>
-                  <Text>05:52</Text>
-                </View>
-                <View className="flex-col gap-1">
-                  <Text>Lohor</Text>
-                  <Text>11:55</Text>
-                </View>
-              </View>
-              <Text>Bekasi, Jati Asih</Text>
-            </View>
-            <View className="flex-1 p-3 justify-center items-center">
-              <Image
-                style={{
-                  width : '100%', 
-                  height: 80,
-                }}
-                source={require("../assets/png/logo_dht_1.png")}
-                resizeMode="contain"
-              />
-            </View>
-          </View>
-        </View> */}
+    <SpecifiedView
+      style={{ paddingHorizontal: 16, marginTop: 6 }}
+    >
+      <ScrollView style={{ flex: 1 }}>
+        <View style={{ zIndex: 1, paddingHorizontal: 16, marginBottom: 4 }}>
+          <Text className="">Assalaamu'alaikum </Text>
+        </View>
         <View style={styless.carousel}>
           <Carousel
             loop={isFocused}
             width={width - 32}
             height={200}
             autoPlay={true}
-            data={dataCarousel}
+            data={filteredSlides}
             scrollAnimationDuration={3000}
             onSnapToItem={setActiveIndex}
             renderItem={_renderItem}
@@ -350,8 +315,9 @@ export default Home = ({ navigation }) => {
             />
           </View>
         </View>
-      </SpecifiedView>
-    </ScrollView>
+
+      </ScrollView>
+    </SpecifiedView>
   );
 };
 

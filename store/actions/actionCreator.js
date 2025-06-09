@@ -6,6 +6,7 @@ import {
   STORE_SET,
   LIST_BOOKS_SET,
   CHANNEL_YOUTUBE_SET,
+  PROMO_SET,
 } from "./actionType";
 
 export const ORIGIN = "https://get.daarulhijrah.com/api.php/";
@@ -101,7 +102,7 @@ export const fetchPromosAction = () => {
       }
 
       const responseJSON = await response.json();
-      dispatch(actionGenerator(PROMOS_SET, responseJSON));
+      dispatch(actionGenerator(PROMO_SET, responseJSON));
     } catch (err) {
       throw errorHandler(err);
     }
