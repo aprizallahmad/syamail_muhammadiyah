@@ -63,18 +63,25 @@ export default Kitab = ({ navigation }) => {
       }
 
       const responseJSON = await response.json();
+      const books = responseJSON[table_name];
+      let bookKey = ''
+      const storagePromises = books.map(async (book) => {
+        bookKey = `${table_name}${book.id}`
+        await AsyncStorage.setItem(bookKey, JSON.stringify(book))
+      })
+      functionLog("fetchBookAction", `bookKey ${bookKey}`);
+      functionLog("fetchBookAction", `responseJSON ${responseJSON}`);
 
-      const stringifiedData = JSON.stringify(responseJSON[table_name]);
+      await Promise.all(storagePromises)
+
       console.log(
         "Ukuran data yang akan disimpan:",
-        (stringifiedData.length / 1024).toFixed(2),
+        (storagePromises.length / 1024).toFixed(2),
         "KB"
       );
 
-      setBooksStorage(stringifiedData);
-      await AsyncStorage.setItem(table_name, stringifiedData);
-
-      dataBooksStorage = await AsyncStorage.getItem(table_name);
+      setBooksStorage(books);
+      dataBooksStorage = await AsyncStorage.getItem(bookKey);
       dataBooksStorage = JSON.parse(dataBooksStorage);
       setBooksStorage(dataBooksStorage);
 
@@ -114,49 +121,6 @@ export default Kitab = ({ navigation }) => {
     }
   };
 
-  const moodalFooter = () => {
-    const handlePress = () => {
-      functionLog("masuk else messageModal", messageModal);
-      if (messageModal === "Done") {
-        setVisible(false);
-        setBooksStorage(dataBooksStorage);
-      } else if (messageModal === "Error..!") {
-        setBooksStorage(booksID[table_name]);
-        setVisible(false);
-      } else {
-        functionLog("masuk else messageModal", messageModal);
-        fetchBookAction();
-      }
-    };
-
-    return (
-      <View style={styles.modalContent}>
-        <View style={styles.header}>
-          <Icons.Ionicons
-            name="information-circle-outline"
-            size={24}
-            color="#555"
-          />
-          <Text style={styles.title}>Download Data Kitab</Text>
-        </View>
-        <Text style={styles.message}>
-          {messageModal}
-        </Text>
-        <View style={styles.footer}>
-          <TouchableOpacity onPress={handlePress}>
-            <Text style={styles.confirmText}>YA</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      // <View style={styles.footer}>
-      //   <TouchableOpacity style={styles.button} onPress={handlePress}>
-      //     <Text style={styles.buttonText}>{messageModal}</Text>
-      //   </TouchableOpacity>
-      // </View>
-    );
-  };
-
   const renderBookItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => {
@@ -178,11 +142,21 @@ export default Kitab = ({ navigation }) => {
     // console.log("ini books " + books.syamail_muhammadiyah)
     try {
       const filter = booksStorage.find((x) => x.id === id);
-      // console.error("ini klik id detail " + id);
-      navigation.navigate("Detail", filter);
-      await AsyncStorage.setItem("last", JSON.stringify(filter));
+      const pages = booksStorage.length;
+      let lastBookId = null;
+      if (pages > 0) {
+        // Access the last element (index: length - 1)
+        lastBookId = booksStorage[pages - 1].id;
+      }
+      // console.error("lastBookId " + lastBookId);
+
+      navigation.navigate("Detail", {
+        bookDetails: filter,
+        lastBookId
+      });
+      await AsyncStorage.setItem("LAST", JSON.stringify(filter));
     } catch (error) {
-      alert("Terjadi Kesalahan");
+      alert(`Terjadi Kesalahan ${error}`);
     }
   };
 
@@ -213,7 +187,7 @@ export default Kitab = ({ navigation }) => {
           </Modal>
         </View>
       ) : (
-        <View>
+        <View className="mb-14">
           <FlatList data={booksStorage} renderItem={renderBookItem} />
         </View>
       )}

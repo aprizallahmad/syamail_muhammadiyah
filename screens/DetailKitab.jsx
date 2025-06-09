@@ -12,7 +12,9 @@ import { useWindowDimensions } from 'react-native';
 export const DetailKitab = ({ route }) => {
   let objData = route;
   const { width } = useWindowDimensions();
-  functionLog("data detail kitab", objData?.params);
+  const {bookDetails, lastBookId} = objData?.params
+  functionLog("data detail kitab", bookDetails);
+  functionLog("lastBookId", lastBookId);
 
   const handleFavorite = async (data) => {
     try {
@@ -41,31 +43,37 @@ export const DetailKitab = ({ route }) => {
   return (
 
     <SpecifiedView className="flex-1">
-      <ScrollView className="flex-1">
+      <ScrollView className="flex-1 mb-10">
         <View style={{ marginHorizontal: 8 }}>
           <View className='mb-4'>
             <Button
               title="favorite"
               onPress={() => {
-                handleFavorite(objData.params)
+                handleFavorite(bookDetails)
               }}
             />
+          </View>
+          <View className='  p-4 '
+          style={styles.containerDefault} >
+            <Text className='text-center  '>
+              {bookDetails?.id}/{lastBookId} Halaman
+            </Text>
           </View>
           <View className='bg-neutral-900  p-4 '
             style={styles.containerDefault} >
             <Text className='text-center text-white'>
-              {objData.params?.judul_arab}
+              {bookDetails?.judul_arab}
             </Text>
           </View>
           <View className='  p-4 '
           style={styles.containerDefault} >
             <Text className='text-center  '>
-              {objData.params?.id}. {objData.params?.judul_indonesia}
+              {bookDetails?.id}. {bookDetails?.judul_indonesia}
             </Text>
           </View>
           <View>
             <RenderHtml
-              source={{ html: objData.params?.isi_arab }}
+              source={{ html: bookDetails?.isi_arab }}
               contentWidth={width}
               tagsStyles={tagsStyles}
             />
